@@ -1,0 +1,441 @@
+/* ===========================
+   CONFIGURACIÓN GENERAL
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#F4F7FC;
+    color:#1E293B;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.sidebar{
+    width:260px;
+    background:#0F172A;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    padding:25px 18px;
+    box-shadow:4px 0 18px rgba(0,0,0,.08);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:45px;
+}
+
+.logo i{
+    font-size:32px;
+    color:#3B82F6;
+}
+
+.logo h2{
+    font-size:22px;
+    line-height:1.2;
+    font-weight:600;
+}
+
+.sidebar nav ul{
+    list-style:none;
+}
+
+.sidebar nav ul li{
+    margin-bottom:12px;
+}
+
+.sidebar nav ul li a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+    color:white;
+    padding:14px 16px;
+    border-radius:12px;
+    transition:.3s;
+    font-size:15px;
+}
+
+.sidebar nav ul li a i{
+    width:22px;
+    text-align:center;
+}
+
+.sidebar nav ul li:hover a{
+    background:#1D4ED8;
+}
+
+.sidebar nav ul li.active a{
+    background:#2563EB;
+}
+
+
+/* ===========================
+   CONTENIDO
+=========================== */
+
+.content{
+    flex:1;
+    padding:40px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+}
+
+.page-header h1{
+    font-size:34px;
+    font-weight:600;
+    color:#111827;
+}
+
+.page-header p{
+    margin-top:5px;
+    color:#6B7280;
+    font-size:14px;
+}
+
+
+/* ===========================
+   BOTÓN
+=========================== */
+
+.btn-primary{
+
+    background:#2563EB;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:13px 22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+    font-weight:500;
+    transition:.3s;
+
+}
+
+.btn-primary:hover{
+
+    background:#1D4ED8;
+
+}
+
+
+/* ===========================
+   BUSCADOR
+=========================== */
+
+.search-container{
+
+    margin-bottom:30px;
+
+}
+
+.search-box{
+
+    width:340px;
+    position:relative;
+
+}
+
+.search-box input{
+
+    width:100%;
+    padding:13px 45px 13px 18px;
+    border:1px solid #D6DCE5;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+    background:white;
+    transition:.3s;
+
+}
+
+.search-box input:focus{
+
+    border-color:#2563EB;
+
+}
+
+.search-box i{
+
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#9CA3AF;
+
+}
+
+
+/* ===========================
+   TABLA
+=========================== */
+
+.table-container{
+
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#F3F6FB;
+
+}
+
+thead th{
+
+    padding:18px;
+    text-align:left;
+    font-size:14px;
+    color:#475569;
+    font-weight:600;
+
+}
+
+tbody td{
+
+    padding:18px;
+    border-top:1px solid #EEF2F7;
+    font-size:14px;
+
+}
+
+tbody tr{
+
+    transition:.25s;
+
+}
+
+tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+
+/* ===========================
+   BOTONES ACCIONES
+=========================== */
+
+.actions{
+
+    display:flex;
+    gap:10px;
+
+}
+
+.btn-edit{
+
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:8px;
+    background:#EFF6FF;
+    color:#2563EB;
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.btn-history{
+
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:8px;
+    background:#F3E8FF;
+    color:#7C3AED;
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.btn-history:hover{
+
+    background:#7C3AED;
+    color:white;
+
+}
+
+.btn-edit:hover{
+
+    background:#2563EB;
+    color:white;
+
+}
+
+
+
+
+/* ===========================
+   FOOTER TABLA
+=========================== */
+
+.table-footer{
+
+    margin-top:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.table-footer span{
+
+    color:#6B7280;
+
+    font-size:14px;
+
+}
+
+.pagination{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.pagination button{
+
+    width:38px;
+    height:38px;
+
+    border:1px solid #D7DCE5;
+
+    background:white;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.pagination button:hover{
+
+    background:#EDF3FF;
+
+}
+
+.active-page{
+
+    background:#2563EB !important;
+    color:white;
+
+    border:none !important;
+
+}
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:1100px){
+
+    .sidebar{
+
+        width:90px;
+
+    }
+
+    .logo h2{
+
+        display:none;
+
+    }
+
+    .sidebar span{
+
+        display:none;
+
+    }
+
+    .sidebar nav ul li a{
+
+        justify-content:center;
+
+    }
+
+}
+
+@media(max-width:900px){
+
+    .container{
+
+        flex-direction:column;
+
+    }
+
+    .sidebar{
+
+        width:100%;
+        height:auto;
+    }
+
+    .content{
+
+        padding:25px;
+
+    }
+
+    .page-header{
+
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+
+    }
+
+    .search-box{
+
+        width:100%;
+
+    }
+
+    .table-container{
+
+        overflow-x:auto;
+
+    }
+
+}
