@@ -12,6 +12,10 @@ def inicio():
 def nuevo_cliente():
     return render_template("cliente_form.html")
 
+@app.route("/servicios/nuevo")
+def nuevo_servicio():
+    return render_template("servicio_form.html")
+
 @app.route("/clientes/editar/<int:id>")
 def editar_cliente(id):
 
@@ -199,6 +203,175 @@ def clientes():
     conexion.close()
 
     return jsonify(clientes)
+
+@app.route("/equipos/nuevo")
+def nuevo_equipo():
+
+    return render_template("equipo_form.html")
+
+@app.route("/equipos")
+def equipos():
+
+    return redirect(url_for("nuevo_equipo"))
+
+@app.route("/equipos/guardar", methods=["POST"])
+def guardar_equipo():
+
+    try:
+
+        data = request.get_json()
+
+        conexion = get_connection()
+        cursor = conexion.cursor()
+
+        # Verificar si ya existe el número de serie
+        cursor.execute("""
+            SELECT COUNT(*)
+            FROM EQUIPO
+            WHERE NumeroSerie = ?
+        """,
+        (data["numeroSerie"],))
+
+        existe = cursor.fetchone()[0]
+
+        if existe > 0:
+
+            conexion.close()
+
+            return jsonify({
+                "mensaje": "Ya existe un equipo registrado con ese número de serie."
+            }), 400
+
+        cursor.execute("""
+            INSERT INTO EQUIPO
+            (
+                TipoEquipo,
+                Marca,
+                Modelo,
+                NumeroSerie
+            )
+            VALUES (?,?,?,?)
+        """,
+        (
+            data["tipoEquipo"],
+            data["marca"],
+            data["modelo"],
+            data["numeroSerie"]
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return jsonify({
+            "mensaje": "Equipo guardado correctamente."
+        })
+
+    except Exception as e:
+
+        print(e)
+
+        return jsonify({
+            "mensaje": str(e)
+        }), 500
+
+@app.route("/clientes/buscar")
+def buscar_clientes():
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            ClienteId,
+            Apellido,
+            Nombre,
+            DNI
+        FROM CLIENTE
+        ORDER BY Apellido, Nombre
+    """)
+
+    clientes = []
+
+    for fila in cursor.fetchall():
+
+        clientes.append({
+
+            "clienteId": fila[0],
+            "apellido": fila[1],
+            "nombre": fila[2],
+            "dni": fila[3]
+
+        })
+
+    conexion.close()
+
+    return jsonify(clientes)
+
+@app.route("/equipos/buscar")
+def buscar_equipos():
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            EquipoId,
+            TipoEquipo,
+            Marca,
+            Modelo,
+            NumeroSerie
+        FROM EQUIPO
+        ORDER BY Marca, Modelo
+    """)
+
+    equipos = []
+
+    for fila in cursor.fetchall():
+
+        equipos.append({
+
+            "equipoId": fila[0],
+            "tipoEquipo": fila[1],
+            "marca": fila[2],
+            "modelo": fila[3],
+            "numeroSerie": fila[4]
+
+        })
+
+    conexion.close()
+
+    return jsonify(equipos)
+
+
+@app.route("/estados")
+def obtener_estados():
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            EstadoId,
+            Descripcion
+        FROM ESTADO
+        ORDER BY EstadoId
+    """)
+
+    estados = []
+
+    for fila in cursor.fetchall():
+
+        estados.append({
+
+            "estadoId": fila[0],
+            "descripcion": fila[1]
+
+        })
+
+    conexion.close()
+
+    return jsonify(estados)
+
 
 
 if __name__ == "__main__":

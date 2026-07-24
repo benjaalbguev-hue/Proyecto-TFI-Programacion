@@ -1,6 +1,5 @@
 from conexion import obtener_conexion
 
-
 def obtener_clientes():
 
     conexion = obtener_conexion()

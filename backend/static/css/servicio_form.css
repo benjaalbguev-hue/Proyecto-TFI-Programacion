@@ -1,0 +1,335 @@
+/* =====================================
+   TARJETA DEL FORMULARIO
+===================================== */
+
+.form-card{
+
+    background:white;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+    padding:40px;
+    max-width:1000px;
+
+}
+
+/* =====================================
+   ENCABEZADO
+===================================== */
+
+.form-header{
+
+    margin-bottom:35px;
+    padding-bottom:20px;
+    border-bottom:1px solid #EEF2F7;
+
+}
+
+.form-header h1{
+
+    font-size:34px;
+    color:#111827;
+    font-weight:600;
+
+}
+
+.form-header p{
+
+    margin-top:8px;
+    color:#64748B;
+    font-size:15px;
+
+}
+
+.form-header strong{
+
+    color:#2563EB;
+
+}
+
+/* =====================================
+   TÍTULOS DE SECCIÓN
+===================================== */
+
+.section-title{
+
+    margin-top:35px;
+    margin-bottom:20px;
+    padding-bottom:10px;
+    border-bottom:2px solid #EEF2F7;
+
+    font-size:18px;
+    font-weight:600;
+
+    color:#1E293B;
+
+}
+
+/* =====================================
+   GRID
+===================================== */
+
+.form-grid{
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+
+}
+
+/* =====================================
+   CAMPOS
+===================================== */
+
+.form-group{
+
+    display:flex;
+    flex-direction:column;
+    margin-bottom:22px;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+    font-size:15px;
+    font-weight:500;
+    color:#334155;
+
+}
+
+.form-group label span{
+
+    color:#EF4444;
+
+}
+
+/* =====================================
+   INPUTS
+===================================== */
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+    border:1px solid #D6DCE5;
+    border-radius:10px;
+    padding:12px 15px;
+
+    font-size:15px;
+
+    font-family:'Poppins',sans-serif;
+
+    outline:none;
+
+    transition:.3s;
+
+    background:white;
+
+}
+
+.form-group input,
+.form-group select{
+
+    height:48px;
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+    min-height:120px;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.10);
+
+}
+
+/* =====================================
+   CAMPOS SOLO LECTURA
+===================================== */
+
+input[readonly]{
+
+    background:#F8FAFC;
+
+    color:#475569;
+
+}
+
+/* =====================================
+   ENLACES
+===================================== */
+
+.nuevo-link{
+
+    margin-top:8px;
+
+    color:#2563EB;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    width:max-content;
+
+}
+
+.nuevo-link:hover{
+
+    text-decoration:underline;
+
+}
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.form-buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:40px;
+
+}
+
+.btn-cancel{
+
+    background:#F1F5F9;
+
+    color:#334155;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px 24px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.btn-cancel:hover{
+
+    background:#E2E8F0;
+
+}
+
+.btn-save{
+
+    background:#2563EB;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px 24px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.btn-save:hover{
+
+    background:#1D4ED8;
+
+}
+
+/* =====================================
+   TOM SELECT
+===================================== */
+
+.ts-control{
+
+    border:1px solid #D6DCE5 !important;
+
+    border-radius:10px !important;
+
+    min-height:48px !important;
+
+    padding:9px 12px !important;
+
+    font-size:15px;
+
+    font-family:'Poppins',sans-serif;
+
+    box-shadow:none !important;
+
+}
+
+.ts-control.focus{
+
+    border-color:#2563EB !important;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.10) !important;
+
+}
+
+.ts-dropdown{
+
+    border-radius:10px;
+
+    border:1px solid #D6DCE5;
+
+    overflow:hidden;
+
+}
+
+.option{
+
+    padding:10px 15px;
+
+}
+
+.active{
+
+    background:#EFF6FF !important;
+
+    color:#2563EB !important;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:900px){
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .form-card{
+
+        padding:25px;
+
+    }
+
+    .form-buttons{
+
+        justify-content:center;
+
+    }
+
+}

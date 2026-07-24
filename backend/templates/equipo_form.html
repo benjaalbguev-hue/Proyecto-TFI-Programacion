@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Servicio Técnico - Equipo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/equipo_form.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-computer"></i>
+
+            <h2>Servicio<br>Técnico</h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="/">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="#">
+                        <i class="fa-solid fa-laptop"></i>
+                        <span>Equipos</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span>Servicios</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-user-gear"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span>Reportes</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+        <div class="form-card">
+
+            <div class="form-header">
+
+                <h1>Nuevo Equipo</h1>
+
+                <p>Inicio / <strong>Equipos</strong> / Nuevo</p>
+
+            </div>
+
+            <form id="formEquipo">
+
+                <div class="form-grid">
+
+                    <!-- Tipo -->
+
+                    <div class="form-group">
+
+                        <label>Tipo de equipo <span>*</span></label>
+
+                        <input
+                            list="tiposEquipo"
+                            id="tipoEquipo"
+                            autocomplete="off"
+                            required>
+
+                        <datalist id="tiposEquipo">
+
+                            <option value="Notebook">
+                            <option value="PC de Escritorio">
+                            <option value="All in One">
+                            <option value="Servidor">
+                            <option value="Impresora">
+                            <option value="Monitor">
+                            <option value="Tablet">
+                            <option value="Celular">
+
+                        </datalist>
+
+                    </div>
+
+                    <!-- Marca -->
+
+                    <div class="form-group">
+
+                        <label>Marca <span>*</span></label>
+
+                        <input
+                            list="marcas"
+                            id="marca"
+                            autocomplete="off"
+                            required>
+
+                        <datalist id="marcas">
+
+                            <option value="Lenovo">
+                            <option value="HP">
+                            <option value="Dell">
+                            <option value="Asus">
+                            <option value="Acer">
+                            <option value="MSI">
+                            <option value="Samsung">
+                            <option value="Apple">
+                            <option value="LG">
+                            <option value="Brother">
+                            <option value="Epson">
+                            <option value="Canon">
+
+                        </datalist>
+
+                    </div>
+
+                </div>
+
+                <!-- Modelo -->
+
+                <div class="form-group">
+
+                    <label>Modelo <span>*</span></label>
+
+                    <input
+                        type="text"
+                        id="modelo"
+                        required>
+
+                </div>
+
+                <!-- Número de Serie -->
+
+                <div class="form-group">
+
+                    <label>Número de Serie <span>*</span></label>
+
+                    <input
+                        type="text"
+                        id="numeroSerie"
+                        required>
+
+                </div>
+
+                <!-- Botones -->
+
+                <div class="form-buttons">
+
+                    <button
+                        type="button"
+                        class="btn-cancel"
+                        onclick="window.location.href='/equipos'">
+
+                        Cancelar
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-save">
+
+                        Guardar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/equipo_form.js') }}"></script>
+
+</body>
+
+</html>
