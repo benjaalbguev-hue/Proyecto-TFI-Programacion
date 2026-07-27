@@ -294,13 +294,13 @@ input[readonly]{
 
 }
 
-.option{
+.ts-dropdown .option{
 
     padding:10px 15px;
 
 }
 
-.active{
+.ts-dropdown .option.active{
 
     background:#EFF6FF !important;
 
@@ -331,5 +331,21 @@ input[readonly]{
         justify-content:center;
 
     }
+
+    /* =====================================
+   OTROS DATOS
+===================================== */
+
+#total{
+
+    font-weight:500;
+
+}
+
+#fechaEntrega{
+
+    cursor:pointer;
+
+}
 
 }

@@ -372,6 +372,58 @@ def obtener_estados():
 
     return jsonify(estados)
 
+@app.route("/servicios/guardar", methods=["POST"])
+def guardar_servicio():
+
+    try:
+
+        data = request.get_json()
+
+        conexion = get_connection()
+        cursor = conexion.cursor()
+
+        cursor.execute("""
+            INSERT INTO SERVICIO
+            (
+                ClienteId,
+                EquipoId,
+                EstadoId,
+                FechaIngreso,
+                ProblemaReportado,
+                Diagnostico,
+                Solucion,
+                Total,
+                FechaEntrega
+            )
+            VALUES (?,?,?,?,?,?,?,?,?)
+        """,
+        (
+            data["clienteId"],
+            data["equipoId"],
+            data["estadoId"],
+            data["fechaIngreso"],
+            data["problema"],
+            data["diagnostico"],
+            data["solucion"],
+            data["total"],
+            data["fechaEntrega"]
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return jsonify({
+            "mensaje": "Servicio guardado correctamente."
+        })
+
+    except Exception as e:
+
+        print(e)
+
+        return jsonify({
+            "mensaje": str(e)
+        }), 500
+
 
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@ const hoy = new Date();
 fechaIngreso.value = hoy.toISOString().split("T")[0];
 
 
+
 // ======================================
 // CARGAR CLIENTES
 // ======================================
@@ -27,36 +28,19 @@ async function cargarClientes(){
 
     clientes = await respuesta.json();
 
-    new TomSelect("#cliente",{
+    const combo = document.getElementById("cliente");
 
-        valueField:"clienteId",
+    combo.innerHTML = `
+        <option value="">Seleccione un cliente</option>
+    `;
 
-        labelField:"nombre",
+    clientes.forEach(cliente => {
 
-        searchField:["nombre","apellido","dni"],
-
-        options:clientes,
-
-        render:{
-
-            option:function(item,escape){
-
-                return `
-                    <div>
-                        <strong>${escape(item.apellido)}, ${escape(item.nombre)}</strong><br>
-                        DNI: ${escape(item.dni)}
-                    </div>
-                `;
-
-            },
-
-            item:function(item,escape){
-
-                return `${escape(item.apellido)}, ${escape(item.nombre)}`;
-
-            }
-
-        }
+        combo.innerHTML += `
+            <option value="${cliente.clienteId}">
+                ${cliente.apellido}, ${cliente.nombre} - DNI: ${cliente.dni}
+            </option>
+        `;
 
     });
 
@@ -73,54 +57,41 @@ async function cargarEquipos(){
 
     equipos = await respuesta.json();
 
-    new TomSelect("#equipo",{
+    const combo = document.getElementById("equipo");
 
-        valueField:"equipoId",
+    combo.innerHTML = `
+        <option value="">Seleccione un equipo</option>
+    `;
 
-        labelField:"modelo",
+    equipos.forEach(equipo => {
 
-        searchField:["marca","modelo","numeroSerie"],
+        combo.innerHTML += `
+            <option value="${equipo.equipoId}">
+                ${equipo.marca} ${equipo.modelo} - Serie: ${equipo.numeroSerie}
+            </option>
+        `;
 
-        options:equipos,
+    });
 
-        render:{
+    combo.addEventListener("change", function(){
 
-            option:function(item,escape){
+        const equipo = equipos.find(
+            e => e.equipoId == this.value
+        );
 
-                return `
-                    <div>
-                        <strong>${escape(item.marca)} ${escape(item.modelo)}</strong><br>
-                        Serie: ${escape(item.numeroSerie)}
-                    </div>
-                `;
+        if(!equipo) return;
 
-            },
+        document.getElementById("tipoEquipo").value = equipo.tipoEquipo;
 
-            item:function(item,escape){
+        document.getElementById("marca").value = equipo.marca;
 
-                return `${escape(item.marca)} ${escape(item.modelo)}`;
+        document.getElementById("modelo").value = equipo.modelo;
 
-            }
-
-        },
-
-        onChange:function(value){
-
-            const equipo = equipos.find(e => e.equipoId == value);
-
-            if(!equipo) return;
-
-            document.getElementById("tipoEquipo").value = equipo.tipoEquipo;
-            document.getElementById("marca").value = equipo.marca;
-            document.getElementById("modelo").value = equipo.modelo;
-            document.getElementById("numeroSerie").value = equipo.numeroSerie;
-
-        }
+        document.getElementById("numeroSerie").value = equipo.numeroSerie;
 
     });
 
 }
-
 
 // ======================================
 // CARGAR ESTADOS
@@ -157,3 +128,82 @@ cargarClientes();
 cargarEquipos();
 
 cargarEstados();
+
+// ======================================
+// GUARDAR SERVICIO
+// ======================================
+
+const formulario = document.getElementById("formServicio");
+
+formulario.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const servicio = {
+
+        clienteId: document.querySelector("#cliente").value,
+
+        equipoId: document.querySelector("#equipo").value,
+
+        estadoId: document.getElementById("estado").value,
+
+        fechaIngreso: document.getElementById("fechaIngreso").value,
+
+        problema: document.getElementById("problema").value.trim(),
+
+        diagnostico: document.getElementById("diagnostico").value.trim(),
+
+        solucion: document.getElementById("solucion").value.trim(),
+
+        total: document.getElementById("total").value,
+
+        fechaEntrega: document.getElementById("fechaEntrega").value || null
+
+    };
+
+
+    try{
+
+        const respuesta = await fetch("/servicios/guardar", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify(servicio)
+
+        });
+
+
+        const resultado = await respuesta.json();
+
+
+        if(respuesta.ok){
+
+            alert(resultado.mensaje);
+
+            window.location.href = "/";
+
+        }
+
+        else{
+
+            alert(resultado.mensaje);
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("No fue posible conectar con el servidor.");
+
+    }
+
+}); 
