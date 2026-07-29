@@ -5,6 +5,8 @@
 let clientes = [];
 let equipos = [];
 
+const servicioId = document.getElementById("servicioId").value;
+
 
 // ======================================
 // FECHA ACTUAL
@@ -30,9 +32,9 @@ async function cargarClientes(){
 
     const combo = document.getElementById("cliente");
 
-    combo.innerHTML = `
-        <option value="">Seleccione un cliente</option>
-    `;
+   combo.innerHTML = `
+    <option value="" disabled selected>Seleccione un cliente</option>
+`;
 
     clientes.forEach(cliente => {
 
@@ -59,9 +61,9 @@ async function cargarEquipos(){
 
     const combo = document.getElementById("equipo");
 
-    combo.innerHTML = `
-        <option value="">Seleccione un equipo</option>
-    `;
+  combo.innerHTML = `
+    <option value="" disabled selected>Seleccione un equipo</option>
+`;
 
     equipos.forEach(equipo => {
 
@@ -118,16 +120,107 @@ async function cargarEstados(){
 
 }
 
+function convertirFechaParaInput(fecha){
+
+    if(!fecha || fecha === "-"){
+        return "";
+    }
+
+    if(fecha.includes("-")){
+        return fecha.substring(0,10);
+    }
+
+    const partes = fecha.split("/");
+
+    return `${partes[2]}-${partes[1]}-${partes[0]}`;
+}
+
+async function cargarServicio(){
+
+    if(!servicioId){
+        return;
+    }
+
+    try{
+
+        const respuesta = await fetch(`/servicios/detalle/${servicioId}`);
+
+        if(!respuesta.ok){
+            throw new Error("No se pudo cargar el servicio");
+        }
+
+        const servicio = await respuesta.json();
+
+        document.getElementById("cliente").value = servicio.clienteId;
+        document.getElementById("equipo").value = servicio.equipoId;
+        document.getElementById("estado").value = servicio.estadoId;
+
+        document.getElementById("fechaIngreso").value =
+            convertirFechaParaInput(servicio.fechaIngreso);
+
+        document.getElementById("problema").value =
+            servicio.problemaReportado || "";
+
+        document.getElementById("diagnostico").value =
+            servicio.diagnostico === "-" ? "" : servicio.diagnostico;
+
+        document.getElementById("solucion").value =
+            servicio.solucion === "-" ? "" : servicio.solucion;
+
+        document.getElementById("total").value =
+            servicio.total ?? 0;
+
+        document.getElementById("fechaEntrega").value =
+            servicio.fechaEntrega === "-"
+                ? ""
+                : convertirFechaParaInput(servicio.fechaEntrega);
+
+        const equipoSeleccionado = equipos.find(
+            equipo => equipo.equipoId == servicio.equipoId
+        );
+
+        if(equipoSeleccionado){
+
+            document.getElementById("tipoEquipo").value =
+                equipoSeleccionado.tipoEquipo || "";
+
+            document.getElementById("marca").value =
+                equipoSeleccionado.marca || "";
+
+            document.getElementById("modelo").value =
+                equipoSeleccionado.modelo || "";
+
+            document.getElementById("numeroSerie").value =
+                equipoSeleccionado.numeroSerie || "";
+        }
+
+    }catch(error){
+
+        console.error(error);
+        alert("Ocurrió un error al cargar el servicio.");
+
+    }
+
+}
+
 
 // ======================================
 // INICIO
 // ======================================
 
-cargarClientes();
+async function iniciarFormulario(){
 
-cargarEquipos();
+    await cargarClientes();
 
-cargarEstados();
+    await cargarEquipos();
+
+    await cargarEstados();
+
+    await cargarServicio();
+
+}
+
+iniciarFormulario();
 
 // ======================================
 // GUARDAR SERVICIO
@@ -158,13 +251,19 @@ formulario.addEventListener("submit", async function(e){
         total: document.getElementById("total").value,
 
         fechaEntrega: document.getElementById("fechaEntrega").value || null
+        
 
     };
+    
+    const url = servicioId
+    ? `/servicios/actualizar/${servicioId}`
+    : "/servicios/guardar"; 
+
 
 
     try{
 
-        const respuesta = await fetch("/servicios/guardar", {
+        const respuesta = await fetch(url, {
 
             method: "POST",
 

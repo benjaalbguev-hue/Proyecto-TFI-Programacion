@@ -128,15 +128,38 @@
 
         <div class="form-card">
 
-            <div class="form-header">
+           <div class="form-header">
 
-                <h1>Nuevo Servicio Técnico</h1>
+    <h1>
 
-                <p>Inicio / <strong>Servicios</strong> / Nuevo</p>
+        {% if servicio_id is defined %}
+            Editar Servicio Técnico
+        {% else %}
+            Nuevo Servicio Técnico
+        {% endif %}
 
-            </div>
+    </h1>
+
+    <p>
+
+        Inicio / <strong>Servicios</strong> /
+
+        {% if servicio_id is defined %}
+            Editar
+        {% else %}
+            Nuevo
+        {% endif %}
+
+    </p>
+
+</div>
 
             <form id="formServicio">
+                <input
+    type="hidden"
+    id="servicioId"
+    value="{{ servicio_id if servicio_id is defined else '' }}"
+>
 
                 <!-- ========================= -->
                 <!-- CLIENTE -->
@@ -333,7 +356,7 @@
 
                     <div class="form-group">
 
-                        <label>Fecha de Entrega</label>
+                        <label>Fecha de Entrega Estimada</label>
 
                         <input
                             type="date"
@@ -354,13 +377,17 @@
 
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn-save">
+                   <button
+    type="submit"
+    class="btn-save">
 
-                        Guardar
+    {% if servicio_id is defined %}
+        Actualizar
+    {% else %}
+        Guardar
+    {% endif %}
 
-                    </button>
+</button>
 
                 </div>
 

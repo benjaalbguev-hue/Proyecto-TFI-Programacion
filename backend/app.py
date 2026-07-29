@@ -16,6 +16,243 @@ def nuevo_cliente():
 def nuevo_servicio():
     return render_template("servicio_form.html")
 
+@app.route("/servicios")
+def listar_servicios():
+    return render_template("servicios.html")
+
+@app.route("/servicios/buscar")
+def buscar_servicios():
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            s.ServicioId,
+            c.Apellido,
+            c.Nombre,
+            e.Marca,
+            e.Modelo,
+            est.Descripcion,
+            s.FechaIngreso,
+            s.Total
+        FROM SERVICIO s
+        INNER JOIN CLIENTE c
+            ON s.ClienteId = c.ClienteId
+        INNER JOIN EQUIPO e
+            ON s.EquipoId = e.EquipoId
+        INNER JOIN ESTADO est
+            ON s.EstadoId = est.EstadoId
+        ORDER BY s.ServicioId DESC
+    """)
+
+    servicios = []
+
+    for fila in cursor.fetchall():
+
+        servicios.append({
+
+            "servicioId": fila[0],
+
+            "cliente":
+                f"{fila[1]} {fila[2]}",
+
+            "equipo":
+                f"{fila[3]} {fila[4]}",
+
+            "estado":
+                fila[5],
+
+            "fechaIngreso":
+                fila[6].strftime("%d/%m/%Y")
+                if fila[6] else "",
+
+            "total":
+                float(fila[7])
+                if fila[7] is not None else 0
+
+        })
+
+    conexion.close()
+
+    return jsonify(servicios)
+
+@app.route("/servicios/detalle/<int:servicio_id>")
+def buscar_servicio(servicio_id):
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    consulta = """
+        SELECT
+            s.ServicioId,
+            s.ClienteId,
+            s.EquipoId,
+            s.EstadoId,
+
+            c.Apellido + ', ' + c.Nombre AS Cliente,
+            c.DNI,
+
+            e.TipoEquipo,
+            e.Marca,
+            e.Modelo,
+            e.NumeroSerie,
+
+            es.Descripcion AS Estado,
+
+            s.FechaIngreso,
+            s.ProblemaReportado,
+            s.Diagnostico,
+            s.Solucion,
+            s.Total,
+            s.FechaEntrega
+
+        FROM SERVICIO s
+
+        INNER JOIN CLIENTE c
+            ON s.ClienteId = c.ClienteId
+
+        INNER JOIN EQUIPO e
+            ON s.EquipoId = e.EquipoId
+
+        INNER JOIN ESTADO es
+            ON s.EstadoId = es.EstadoId
+
+        WHERE s.ServicioId = ?
+    """
+
+    cursor.execute(consulta, (servicio_id,))
+
+    fila = cursor.fetchone()
+
+    cursor.close()
+    conexion.close()
+
+    if fila is None:
+        return jsonify({
+            "error": "Servicio no encontrado"
+        }), 404
+
+    servicio = {
+        "servicioId": fila[0],
+        "clienteId": fila[1],
+        "equipoId": fila[2],
+        "estadoId": fila[3],
+
+        "cliente": fila[4],
+        "dni": fila[5],
+
+        "tipoEquipo": fila[6],
+        "marca": fila[7],
+        "modelo": fila[8],
+        "numeroSerie": fila[9],
+
+        "estado": fila[10],
+
+        "fechaIngreso": (
+            fila[11].strftime("%d/%m/%Y")
+            if fila[11]
+            else "-"
+        ),
+
+        "problemaReportado": fila[12] or "-",
+        "diagnostico": fila[13] or "-",
+        "solucion": fila[14] or "-",
+
+        "total": float(fila[15]) if fila[15] is not None else 0,
+
+        "fechaEntrega": (
+            fila[16].strftime("%d/%m/%Y")
+            if fila[16]
+            else "-"
+        )
+    }
+
+    return jsonify(servicio)
+@app.route("/servicios/editar/<int:servicio_id>")
+def editar_servicio(servicio_id):
+
+    return render_template(
+        "servicio_form.html",
+        servicio_id=servicio_id
+    )
+
+@app.route("/servicios/actualizar/<int:servicio_id>", methods=["POST"])
+def actualizar_servicio(servicio_id):
+
+    try:
+
+        data = request.get_json()
+
+        if not data:
+            return jsonify({
+                "mensaje": "No se recibieron datos."
+            }), 400
+
+        conexion = get_connection()
+        cursor = conexion.cursor()
+
+        cursor.execute("""
+            SELECT COUNT(*)
+            FROM SERVICIO
+            WHERE ServicioId = ?
+        """, (servicio_id,))
+
+        existe = cursor.fetchone()[0]
+
+        if existe == 0:
+
+            cursor.close()
+            conexion.close()
+
+            return jsonify({
+                "mensaje": "El servicio no existe."
+            }), 404
+
+        cursor.execute("""
+            UPDATE SERVICIO
+            SET
+                ClienteId = ?,
+                EquipoId = ?,
+                EstadoId = ?,
+                FechaIngreso = ?,
+                ProblemaReportado = ?,
+                Diagnostico = ?,
+                Solucion = ?,
+                Total = ?,
+                FechaEntrega = ?
+            WHERE ServicioId = ?
+        """,
+        (
+            data["clienteId"],
+            data["equipoId"],
+            data["estadoId"],
+            data["fechaIngreso"],
+            data["problema"],
+            data["diagnostico"] or None,
+            data["solucion"] or None,
+            data["total"] or 0,
+            data["fechaEntrega"],
+            servicio_id
+        ))
+
+        conexion.commit()
+
+        cursor.close()
+        conexion.close()
+
+        return jsonify({
+            "mensaje": "Servicio actualizado correctamente."
+        })
+
+    except Exception as e:
+
+        print("Error al actualizar servicio:", e)
+
+        return jsonify({
+            "mensaje": "Ocurrió un error al actualizar el servicio."
+        }), 500
+
 @app.route("/clientes/editar/<int:id>")
 def editar_cliente(id):
 
@@ -383,32 +620,33 @@ def guardar_servicio():
         cursor = conexion.cursor()
 
         cursor.execute("""
-            INSERT INTO SERVICIO
-            (
-                ClienteId,
-                EquipoId,
-                EstadoId,
-                FechaIngreso,
-                ProblemaReportado,
-                Diagnostico,
-                Solucion,
-                Total,
-                FechaEntrega
-            )
-            VALUES (?,?,?,?,?,?,?,?,?)
-        """,
-        (
-            data["clienteId"],
-            data["equipoId"],
-            data["estadoId"],
-            data["fechaIngreso"],
-            data["problema"],
-            data["diagnostico"],
-            data["solucion"],
-            data["total"],
-            data["fechaEntrega"]
-        ))
-
+    INSERT INTO SERVICIO
+    (
+        ClienteId,
+        EquipoId,
+        UsuarioId,
+        EstadoId,
+        FechaIngreso,
+        ProblemaReportado,
+        Diagnostico,
+        Solucion,
+        Total,
+        FechaEntrega
+    )
+    VALUES (?,?,?,?,?,?,?,?,?,?)
+""",
+(
+    data["clienteId"],
+    data["equipoId"],
+    2,
+    data["estadoId"],
+    data["fechaIngreso"],
+    data["problema"],
+    data["diagnostico"],
+    data["solucion"],
+    data["total"],
+    data["fechaEntrega"]
+))
         conexion.commit()
         conexion.close()
 

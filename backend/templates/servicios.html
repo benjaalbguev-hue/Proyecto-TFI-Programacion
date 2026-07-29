@@ -1,0 +1,461 @@
+ <!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Servicio Técnico - Servicios</title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <!-- CSS PRINCIPAL -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+
+    <!-- CSS SERVICIOS -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/servicios.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <i class="fa-solid fa-computer"></i>
+
+            <h2>
+                Servicio<br>
+                Técnico
+            </h2>
+
+        </div>
+
+
+        <nav>
+
+            <ul>
+
+
+                <!-- CLIENTES -->
+
+                <li>
+
+                    <a href="{{ url_for('inicio') }}">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <span>Clientes</span>
+
+                    </a>
+
+                </li>
+
+
+                <!-- EQUIPOS -->
+
+                <li>
+
+                    <a href="/equipos/nuevo">
+
+                        <i class="fa-solid fa-laptop"></i>
+
+                        <span>Equipos</span>
+
+                    </a>
+
+                </li>
+
+
+                <!-- SERVICIOS -->
+
+                <li class="active">
+
+                   <a href="{{ url_for('listar_servicios') }}">
+
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                        <span>Servicios</span>
+
+                    </a>
+
+                </li>
+
+
+                <!-- USUARIOS -->
+
+                <li>
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-user-gear"></i>
+
+                        <span>Usuarios</span>
+
+                    </a>
+
+                </li>
+
+
+                <!-- REPORTES -->
+
+                <li>
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <span>Reportes</span>
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </nav>
+
+
+    </aside>
+
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+
+        <!-- ========================= -->
+        <!-- ENCABEZADO -->
+        <!-- ========================= -->
+
+        <div class="page-header">
+
+
+            <div>
+
+                <h1>Servicios</h1>
+
+                <p>
+                    Inicio / Listado / <strong>Seguimiento</strong>
+                </p>
+
+            </div>
+
+
+            <button
+                class="btn-primary"
+                onclick="window.location.href='/servicios/nuevo'">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Servicio
+
+            </button>
+
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- FILTROS -->
+        <!-- ========================= -->
+
+        <div class="filters-container">
+
+
+            <!-- BUSCADOR -->
+
+            <div class="search-box">
+
+
+                <input
+                    type="text"
+                    id="buscarServicio"
+                    placeholder="Buscar servicio...">
+
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+
+            </div>
+
+
+            <!-- ESTADO -->
+
+            <div class="filter-group">
+
+
+                <label>Estado</label>
+
+
+                <select id="filtroEstado">
+
+                    <option value="">Todos</option>
+
+                </select>
+
+
+            </div>
+
+
+            <!-- FECHA DESDE -->
+
+            <div class="filter-group">
+
+
+                <label>Desde</label>
+
+
+                <input
+                    type="date"
+                    id="fechaDesde">
+
+
+            </div>
+
+
+            <!-- FECHA HASTA -->
+
+            <div class="filter-group">
+
+
+                <label>Hasta</label>
+
+
+                <input
+                    type="date"
+                    id="fechaHasta">
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- TABLA -->
+        <!-- ========================= -->
+
+        <div class="table-container">
+
+
+            <table>
+
+
+                <thead>
+
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Cliente</th>
+
+                        <th>Equipo</th>
+
+                        <th>Estado</th>
+
+                        <th>Ingreso</th>
+
+                        <th>Total</th>
+
+                        <th>Acciones</th>
+
+                    </tr>
+
+
+                </thead>
+
+
+                <tbody id="tablaServicios">
+
+
+                    <!--
+
+                    Los servicios se cargarán
+                    automáticamente desde Flask.
+
+                    -->
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PIE DE TABLA -->
+        <!-- ========================= -->
+
+        <div class="table-footer">
+
+
+            <span id="cantidadServicios">
+
+                Mostrando 0 servicios
+
+            </span>
+
+
+            <div class="pagination">
+
+
+                <button>
+
+                    <i class="fa-solid fa-chevron-left"></i>
+
+                </button>
+
+
+                <button class="active-page">
+
+                    1
+
+                </button>
+
+
+                <button>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+<!-- ========================= -->
+<!-- MODAL VER SERVICIO -->
+<!-- ========================= -->
+
+<div id="modalServicio" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Detalle del Servicio</h2>
+
+            <button id="cerrarModal" class="btn-close">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="detalle-grid">
+
+                <div>
+                    <strong>Cliente</strong>
+                    <p id="detalleCliente"></p>
+                </div>
+
+                <div>
+                    <strong>Equipo</strong>
+                    <p id="detalleEquipo"></p>
+                </div>
+
+                <div>
+                    <strong>Estado</strong>
+                    <p id="detalleEstado"></p>
+                </div>
+
+                <div>
+                    <strong>Fecha de ingreso</strong>
+                    <p id="detalleIngreso"></p>
+                </div>
+
+                <div>
+                    <strong>Problema</strong>
+                    <p id="detalleProblema"></p>
+                </div>
+
+                <div>
+                    <strong>Diagnóstico</strong>
+                    <p id="detalleDiagnostico"></p>
+                </div>
+
+                <div>
+                    <strong>Solución</strong>
+                    <p id="detalleSolucion"></p>
+                </div>
+
+                <div>
+                    <strong>Total</strong>
+                    <p id="detalleTotal"></p>
+                </div>
+
+                <div>
+                    <strong>Fecha de entrega</strong>
+                    <p id="detalleEntrega"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
+
+<script src="{{ url_for('static', filename='js/servicios.js') }}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,340 @@
+/* =====================================
+   FILTROS DE SERVICIOS
+===================================== */
+
+.filters-container{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+/* =====================================
+   BUSCADOR
+===================================== */
+
+.filters-container .search-box{
+
+    width:300px;
+
+}
+
+
+/* =====================================
+   GRUPOS DE FILTROS
+===================================== */
+
+.filter-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.filter-group label{
+
+    font-size:14px;
+
+    font-weight:500;
+
+    color:#475569;
+
+}
+
+
+/* =====================================
+   INPUTS Y SELECT
+===================================== */
+
+.filter-group select,
+.filter-group input{
+
+    height:45px;
+
+    min-width:170px;
+
+    padding:0 14px;
+
+    border:1px solid #D6DCE5;
+
+    border-radius:10px;
+
+    background:white;
+
+    color:#334155;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+
+.filter-group select:focus,
+.filter-group input:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.10);
+
+}
+
+
+/* =====================================
+   ESTADO DE SERVICIO
+===================================== */
+
+.estado{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:500;
+
+    white-space:nowrap;
+
+}
+
+
+/* =====================================
+   ACCIONES
+===================================== */
+
+.btn-view{
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#EFF6FF;
+
+    color:#2563EB;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.btn-view:hover{
+
+    background:#2563EB;
+
+    color:white;
+
+}
+
+
+.btn-edit-service{
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#F3E8FF;
+
+    color:#7C3AED;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.btn-edit-service:hover{
+
+    background:#7C3AED;
+
+    color:white;
+
+}
+
+
+/* =====================================
+   TABLA DE SERVICIOS
+===================================== */
+
+#tablaServicios td{
+
+    vertical-align:middle;
+
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:1100px){
+
+    .filters-container{
+
+        align-items:stretch;
+
+    }
+
+    .filters-container .search-box{
+
+        width:100%;
+
+    }
+
+    .filter-group{
+
+        flex:1;
+
+    }
+
+    .filter-group select,
+    .filter-group input{
+
+        width:100%;
+
+    }
+
+}
+
+
+@media(max-width:900px){
+
+    .filters-container{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .filter-group{
+
+        width:100%;
+
+    }
+
+}
+
+/*======================================
+    MODAL VER SERVICIO
+======================================*/
+
+.modal{
+
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+}
+
+.modal-content{
+
+    background: #fff;
+    width: 700px;
+    max-width: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.modal-header{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    background: #0d6efd;
+    color: white;
+
+}
+
+.btn-close{
+
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+
+}
+
+.modal-body{
+
+    padding: 25px;
+
+}
+
+.detalle-grid{
+
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+
+}
+
+.detalle-grid div{
+
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+
+}
+
+.detalle-grid strong{
+
+    display: block;
+    margin-bottom: 6px;
+    color: #0d6efd;
+
+}
+
+.detalle-grid p{
+
+    margin: 0;
+    color: #333;
+
+}
