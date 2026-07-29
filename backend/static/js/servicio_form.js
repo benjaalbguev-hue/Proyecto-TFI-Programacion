@@ -285,7 +285,7 @@ formulario.addEventListener("submit", async function(e){
 
             alert(resultado.mensaje);
 
-            window.location.href = "/";
+            window.location.href = "/servicios";
 
         }
 

@@ -26,6 +26,16 @@ body{
 
 .sidebar{
     width:260px;
+       position: fixed;
+         top: 0;
+
+    left: 0;
+
+    width: 260px;
+
+    height: 100vh;
+
+    overflow-y: auto;
     background:#0F172A;
     color:#fff;
     display:flex;
@@ -91,8 +101,13 @@ body{
 =========================== */
 
 .content{
+
     flex:1;
+
+    margin-left:260px;
+
     padding:40px;
+
 }
 
 .page-header{
@@ -149,7 +164,13 @@ body{
 
 .search-container{
 
-    margin-bottom:30px;
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
 
 }
 
@@ -437,5 +458,61 @@ tbody tr:hover{
         overflow-x:auto;
 
     }
+
+}
+
+/*==========================
+FILTRO DE CLIENTES
+==========================*/
+
+.filter-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    color:#555;
+
+}
+
+.filter-box select{
+
+    padding:8px 12px;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:8px;
+
+    background:#fff;
+
+    font-family:'Poppins', sans-serif;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+}
+
+.filter-box select:hover{
+
+    border-color:#4A90E2;
+
+}
+
+.filter-box select:focus{
+
+    outline:none;
+
+    border-color:#4A90E2;
+
+    box-shadow:0 0 6px rgba(74,144,226,.25);
 
 }

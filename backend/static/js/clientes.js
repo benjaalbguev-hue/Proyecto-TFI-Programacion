@@ -12,7 +12,7 @@ let clientes = [];
 const tabla = document.getElementById("tablaClientes");
 const buscador = document.getElementById("buscar");
 const cantidad = document.getElementById("cantidadClientes");
-
+const selectorCantidad = document.getElementById("cantidadMostrar");
 
 
 // ======================================
@@ -27,9 +27,7 @@ async function cargarClientes() {
 
         clientes = await respuesta.json();
 
-
-        mostrarClientes(clientes);
-
+        aplicarFiltros();
 
     } catch (error) {
 
@@ -40,6 +38,42 @@ async function cargarClientes() {
 }
 
 
+// ======================================
+// APLICAR BUSCADOR + FILTRO
+// ======================================
+
+function aplicarFiltros() {
+
+    const texto = buscador.value.toLowerCase();
+
+    let resultado = clientes.filter(cliente =>
+
+        cliente.dni.includes(texto) ||
+
+        cliente.nombre.toLowerCase().includes(texto) ||
+
+        cliente.apellido.toLowerCase().includes(texto) ||
+
+        (cliente.telefono || "").includes(texto) ||
+
+        (cliente.direccion || "").toLowerCase().includes(texto) ||
+
+        (cliente.email || "").toLowerCase().includes(texto)
+
+    );
+
+    const limite = selectorCantidad.value;
+
+    if (limite !== "todos") {
+
+        resultado = resultado.slice(0, Number(limite));
+
+    }
+
+    mostrarClientes(resultado);
+
+}
+
 
 // ======================================
 // MOSTRAR CLIENTES
@@ -47,12 +81,9 @@ async function cargarClientes() {
 
 function mostrarClientes(lista) {
 
-
     tabla.innerHTML = "";
 
-
     lista.forEach(cliente => {
-
 
         tabla.innerHTML += `
 
@@ -64,99 +95,59 @@ function mostrarClientes(lista) {
 
                 <td>${cliente.nombre}</td>
 
-                <td>${cliente.telefono}</td>
+                <td>${cliente.telefono ?? ""}</td>
 
-                <td>${cliente.direccion}</td>
+                <td>${cliente.direccion ?? ""}</td>
 
-                <td>${cliente.email}</td>
-
+                <td>${cliente.email ?? ""}</td>
 
                 <td>
 
                     <div class="actions">
 
+                        <button
+                            class="btn-edit"
+                            onclick="window.location.href='/clientes/editar/${cliente.clienteid}'">
+
+                            <i class="fa-solid fa-pen"></i>
+
+                        </button>
 
                         <button
-    class="btn-edit"
-    onclick="window.location.href='/clientes/editar/${cliente.clienteid}'">
+                            class="btn-history"
+                            onclick="window.location.href='/clientes/${cliente.clienteid}/historial'">
 
-    <i class="fa-solid fa-pen"></i>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
 
-</button>
-
-
-                        <button
-    class="btn-history"
-    onclick="window.location.href='/clientes/${cliente.clienteid}/historial'">
-
-    <i class="fa-solid fa-clock-rotate-left"></i>
-
-</button>
-
+                        </button>
 
                     </div>
 
                 </td>
 
-
             </tr>
 
         `;
 
-
     });
-
-
 
     cantidad.textContent = `Mostrando ${lista.length} clientes`;
 
 }
 
 
-
 // ======================================
 // BUSCADOR
 // ======================================
 
-buscador.addEventListener("keyup", () => {
+buscador.addEventListener("keyup", aplicarFiltros);
 
 
-    const texto = buscador.value.toLowerCase();
+// ======================================
+// FILTRO DE CANTIDAD
+// ======================================
 
-
-
-    const resultado = clientes.filter(cliente =>
-
-
-        cliente.dni.includes(texto) ||
-
-
-        cliente.nombre.toLowerCase().includes(texto) ||
-
-
-        cliente.apellido.toLowerCase().includes(texto) ||
-
-
-        cliente.telefono.includes(texto) ||
-
-
-        cliente.direccion.toLowerCase().includes(texto) ||
-
-
-        cliente.email.toLowerCase().includes(texto)
-
-
-    );
-
-
-
-    mostrarClientes(resultado);
-
-
-
-});
-
-
+selectorCantidad.addEventListener("change", aplicarFiltros);
 
 
 // ======================================

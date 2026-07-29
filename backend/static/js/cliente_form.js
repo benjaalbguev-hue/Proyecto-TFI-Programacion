@@ -30,12 +30,26 @@ document.getElementById("nombre").addEventListener("input", function () {
 
 });
 
+
 // Apellido: solo letras
 document.getElementById("apellido").addEventListener("input", function () {
 
     this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
 
 });
+
+["apellido", "nombre", "direccion"].forEach(id => {
+
+    document.getElementById(id).addEventListener("input", function () {
+
+        this.value = this.value
+            .toLowerCase()
+            .replace(/\b\w/g, letra => letra.toUpperCase());
+
+    });
+
+});
+
 
 formulario.addEventListener("submit", async function (e) {
 
