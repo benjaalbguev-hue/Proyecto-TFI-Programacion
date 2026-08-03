@@ -1,0 +1,465 @@
+/* =====================================
+   FILTROS DE REPORTES
+===================================== */
+
+.report-filters{
+
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:28px;
+
+    display:flex;
+    align-items:flex-end;
+    gap:18px;
+    flex-wrap:wrap;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.report-filters .filter-group{
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+
+}
+
+.report-filters label{
+
+    font-size:14px;
+    font-weight:500;
+    color:#475569;
+
+}
+
+.report-filters input,
+.report-filters select{
+
+    min-width:190px;
+    height:46px;
+
+    padding:0 14px;
+
+    border:1px solid #D6DCE5;
+    border-radius:10px;
+
+    background:white;
+    color:#334155;
+
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+
+    outline:none;
+    transition:.3s;
+
+}
+
+.report-filters input:focus,
+.report-filters select:focus{
+
+    border-color:#2563EB;
+    box-shadow:0 0 0 3px rgba(37,99,235,.10);
+
+}
+
+.btn-secondary{
+
+    height:46px;
+
+    padding:0 18px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#E2E8F0;
+    color:#334155;
+
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+    font-weight:500;
+
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.btn-secondary:hover{
+
+    background:#CBD5E1;
+
+}
+
+
+/* =====================================
+   TARJETAS RESUMEN
+===================================== */
+
+.report-cards{
+
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+
+    margin-bottom:28px;
+
+}
+
+.report-card{
+
+    background:white;
+    border-radius:16px;
+    padding:20px;
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.report-card-icon{
+
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:#EFF6FF;
+    color:#2563EB;
+
+    font-size:20px;
+
+    flex-shrink:0;
+
+}
+
+.report-card span{
+
+    display:block;
+
+    font-size:13px;
+    color:#64748B;
+
+    margin-bottom:5px;
+
+}
+
+.report-card strong{
+
+    display:block;
+
+    font-size:22px;
+    font-weight:600;
+    color:#0F172A;
+
+}
+
+
+/* =====================================
+   GRÁFICOS
+===================================== */
+
+.charts-grid{
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+
+    margin-bottom:28px;
+
+}
+
+.chart-card{
+
+    background:white;
+    border-radius:18px;
+    padding:24px;
+
+    min-height:360px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+
+}
+
+.chart-card h3{
+
+    margin-bottom:22px;
+
+    font-size:18px;
+    font-weight:600;
+    color:#1E293B;
+
+}
+
+.chart-card canvas{
+
+    width:100% !important;
+    max-height:280px;
+
+}
+
+
+/* =====================================
+   TABLA REPORTES
+===================================== */
+
+#tablaReportes td{
+
+    vertical-align:middle;
+
+}
+
+.reporte-estado{
+
+    display:inline-flex;
+    align-items:center;
+
+    padding:6px 11px;
+
+    border-radius:20px;
+
+    font-size:12px;
+    font-weight:500;
+
+    background:#EFF6FF;
+    color:#2563EB;
+
+    white-space:nowrap;
+
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:1350px){
+
+    .report-cards{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+@media(max-width:1050px){
+
+    .charts-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .report-cards{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .report-filters{
+
+        flex-direction:column;
+        align-items:stretch;
+
+    }
+
+    .report-filters .filter-group{
+
+        width:100%;
+
+    }
+
+    .report-filters input,
+    .report-filters select,
+    .btn-secondary{
+
+        width:100%;
+        min-width:0;
+
+    }
+
+    .report-cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* =====================================
+   COLORES DE ESTADOS
+===================================== */
+
+.reporte-estado.estado-ingresado{
+
+    background:#EFF6FF;
+    color:#2563EB;
+
+}
+
+.reporte-estado.estado-diagnostico{
+
+    background:#FEF3C7;
+    color:#B45309;
+
+}
+
+.reporte-estado.estado-reparacion{
+
+    background:#FFEDD5;
+    color:#C2410C;
+
+}
+
+.reporte-estado.estado-finalizado{
+
+    background:#DCFCE7;
+    color:#15803D;
+
+}
+
+.reporte-estado.estado-otro{
+
+    background:#F1F5F9;
+    color:#475569;
+
+}
+
+/* =====================================
+   EFECTO EN TARJETAS
+===================================== */
+
+.report-card{
+
+    transition:transform .25s, box-shadow .25s;
+
+}
+
+.report-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.10);
+
+}
+
+/* =====================================
+   SIN RESULTADOS
+===================================== */
+
+.sin-resultados{
+
+    text-align:center;
+
+    padding:45px !important;
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+.sin-resultados i{
+
+    margin-right:8px;
+
+    color:#2563EB;
+
+}
+
+/* =====================================
+   RESUMEN DEL PERÍODO
+===================================== */
+
+.report-summary{
+
+    margin-bottom:15px;
+
+}
+
+.report-summary h3{
+
+    font-size:19px;
+
+    color:#1E293B;
+
+    margin-bottom:4px;
+
+}
+
+.report-summary p{
+
+    font-size:14px;
+
+    color:#64748B;
+
+}
+
+/* =====================================
+   IMPRESIÓN DEL REPORTE
+===================================== */
+
+@media print{
+
+    .sidebar,
+    .page-header button,
+    .report-filters,
+    .table-footer{
+
+        display:none !important;
+
+    }
+
+    body{
+
+        background:white;
+
+    }
+
+    .content{
+
+        padding:20px;
+
+    }
+
+    .container{
+
+        display:block;
+
+    }
+
+    .report-card,
+    .chart-card,
+    .table-container{
+
+        box-shadow:none;
+
+        border:1px solid #E2E8F0;
+
+    }
+
+    .charts-grid{
+
+        page-break-inside:avoid;
+
+    }
+
+    .table-container{
+
+        page-break-inside:auto;
+
+    }
+
+}

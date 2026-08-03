@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Servicio Técnico - Reportes</title>
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS PRINCIPAL -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- CSS REPORTES -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/reportes.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-computer"></i>
+
+            <h2>
+                Servicio<br>
+                Técnico
+            </h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                    <a href="{{ url_for('inicio') }}">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <span>Clientes</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="/equipos/nuevo">
+
+                        <i class="fa-solid fa-laptop"></i>
+
+                        <span>Equipos</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('listar_servicios') }}">
+
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                        <span>Servicios</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-user-gear"></i>
+
+                        <span>Usuarios</span>
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="{{ url_for('reportes') }}">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <span>Reportes</span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+        <div class="page-header">
+
+    <div>
+
+        <h1>Reportes</h1>
+
+        <p>Inicio / <strong>Reportes</strong></p>
+
+    </div>
+
+    <button
+        type="button"
+        id="exportarPdf"
+        class="btn-primary">
+
+        <i class="fa-solid fa-file-pdf"></i>
+
+        Exportar PDF
+
+    </button>
+
+</div>
+
+        <!-- ========================= -->
+        <!-- FILTROS -->
+        <!-- ========================= -->
+
+        <div class="report-filters">
+
+
+            <div class="filter-group">
+
+    <label>Período</label>
+
+    <select id="reportePeriodo">
+
+        <option value="todos">Todos</option>
+
+        <option value="hoy">Hoy</option>
+
+        <option value="semana">Esta semana</option>
+
+        <option value="mes">Este mes</option>
+
+        <option value="anio">Este año</option>
+
+        <option value="personalizado">Personalizado</option>
+
+    </select>
+
+</div>
+
+            <div class="filter-group">
+
+                <label>Desde</label>
+
+                <input
+                    type="date"
+                    id="reporteDesde">
+
+            </div>
+
+            <div class="filter-group">
+
+                <label>Hasta</label>
+
+                <input
+                    type="date"
+                    id="reporteHasta">
+
+            </div>
+
+            <div class="filter-group">
+
+                <label>Estado</label>
+
+                <select id="reporteEstado">
+
+                    <option value="">Todos</option>
+
+                </select>
+
+            </div>
+
+            <button
+                type="button"
+                id="limpiarFiltros"
+                class="btn-secondary">
+
+                Limpiar filtros
+
+            </button>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- TARJETAS RESUMEN -->
+        <!-- ========================= -->
+
+        <div class="report-cards">
+
+            <div class="report-card">
+
+                <div class="report-card-icon">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Total de servicios</span>
+
+                    <strong id="totalServicios">0</strong>
+
+                </div>
+
+            </div>
+
+            <div class="report-card">
+
+                <div class="report-card-icon">
+
+                    <i class="fa-solid fa-inbox"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Servicios ingresados</span>
+
+                    <strong id="serviciosIngresados">0</strong>
+
+                </div>
+
+            </div>
+
+            <div class="report-card">
+
+                <div class="report-card-icon">
+
+                    <i class="fa-solid fa-gears"></i>
+
+                </div>
+
+                <div>
+
+                    <span>En reparación</span>
+
+                    <strong id="serviciosReparacion">0</strong>
+
+                </div>
+
+            </div>
+
+            <div class="report-card">
+
+                <div class="report-card-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Finalizados</span>
+
+                    <strong id="serviciosFinalizados">0</strong>
+
+                </div>
+
+            </div>
+
+            <div class="report-card">
+
+                <div class="report-card-icon">
+
+                    <i class="fa-solid fa-dollar-sign"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Total facturado</span>
+
+                    <strong id="totalFacturado">$0</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- GRÁFICOS -->
+        <!-- ========================= -->
+
+        <div class="charts-grid">
+
+            <div class="chart-card">
+
+                <h3>Servicios por estado</h3>
+
+                <canvas id="graficoEstados"></canvas>
+
+            </div>
+
+            <div class="chart-card">
+
+                <h3>Facturación por mes</h3>
+
+                <canvas id="graficoFacturacion"></canvas>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- TABLA RESUMEN -->
+        <!-- ========================= -->
+
+        <div class="table-container">
+
+           
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Fecha</th>
+
+                        <th>Cliente</th>
+
+                        <th>Equipo</th>
+
+                        <th>Estado</th>
+
+                        <th>Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaReportes">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="table-footer">
+
+            <span id="cantidadReportes">
+
+                Mostrando 0 servicios
+
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- CHART.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JAVASCRIPT REPORTES -->
+
+<script src="{{ url_for('static', filename='js/reportes.js') }}"></script>
+
+</body>
+
+</html>

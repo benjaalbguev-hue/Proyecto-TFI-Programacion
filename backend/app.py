@@ -20,6 +20,71 @@ def nuevo_servicio():
 def listar_servicios():
     return render_template("servicios.html")
 
+@app.route("/reportes")
+def reportes():
+
+    return render_template("reportes.html")
+
+@app.route("/reportes/datos")
+def datos_reportes():
+
+    conexion = get_connection()
+
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+
+            s.ServicioId,
+
+            c.Apellido + ' ' + c.Nombre,
+
+            e.Marca + ' ' + e.Modelo,
+
+            es.Descripcion,
+
+            s.FechaIngreso,
+
+            s.Total
+
+        FROM SERVICIO s
+
+        INNER JOIN CLIENTE c
+            ON s.ClienteId = c.ClienteId
+
+        INNER JOIN EQUIPO e
+            ON s.EquipoId = e.EquipoId
+
+        INNER JOIN ESTADO es
+            ON s.EstadoId = es.EstadoId
+
+        ORDER BY s.FechaIngreso DESC
+    """)
+
+    reportes = []
+
+    for fila in cursor.fetchall():
+
+        reportes.append({
+
+            "servicioId": fila[0],
+
+            "cliente": fila[1],
+
+            "equipo": fila[2],
+
+            "estado": fila[3],
+
+            "fechaIngreso": fila[4].strftime("%d/%m/%Y"),
+
+            "total": float(fila[5] or 0)
+
+        })
+
+    conexion.close()
+
+    return jsonify(reportes)
+
 @app.route("/servicios/buscar")
 def buscar_servicios():
 
