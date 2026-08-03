@@ -50,6 +50,33 @@
 
         </div>
 
+         <!-- USUARIO LOGUEADO -->
+
+    <div class="user-info">
+
+        <i class="fa-solid fa-circle-user"></i>
+
+        <div>
+
+            <strong>
+                {{ session["nombre"] }} {{ session["apellido"] }}
+            </strong>
+
+
+            {% if session["rol_id"] == 1 %}
+
+                <span>Administrador</span>
+
+            {% else %}
+
+                <span>Empleado</span>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
 
         <nav>
 
@@ -58,7 +85,7 @@
 
                 <li class="active">
 
-                  <a href="{{ url_for('inicio') }}">
+                 <a href="{{ url_for('clientes') }}">
 
                         <i class="fa-solid fa-users"></i>
 
@@ -95,30 +122,37 @@
                 </li>
 
 
-                <li>
+               {% if session["rol_id"] == 1 %}
 
-                    <a href="#">
+<li>
 
-                        <i class="fa-solid fa-user-gear"></i>
+    <a href="/usuarios">
 
-                        <span>Usuarios</span>
+        <i class="fa-solid fa-user-gear"></i>
 
-                    </a>
+        <span>Usuarios</span>
 
-                </li>
+    </a>
 
+</li>
 
-                <li>
+{% endif %}
 
-                    <a href="{{ url_for('reportes') }}">
+                {% if session["rol_id"] == 1 %}
 
-                        <i class="fa-solid fa-chart-column"></i>
+<li>
 
-                        <span>Reportes</span>
+    <a href="{{ url_for('reportes') }}">
 
-                    </a>
+        <i class="fa-solid fa-chart-column"></i>
 
-                </li>
+        <span>Reportes</span>
+
+    </a>
+
+</li>
+
+{% endif %}
 
 
             </ul>
@@ -126,6 +160,17 @@
 
         </nav>
 
+        <div class="logout">
+
+    <a href="/logout">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        <span>Cerrar sesión</span>
+
+    </a>
+
+</div>
 
     </aside>
 

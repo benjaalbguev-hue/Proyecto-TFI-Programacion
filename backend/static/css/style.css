@@ -516,3 +516,110 @@ FILTRO DE CLIENTES
     box-shadow:0 0 6px rgba(74,144,226,.25);
 
 }
+
+/* ========================= */
+/* INFORMACIÓN DEL USUARIO */
+/* ========================= */
+
+.user-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 15px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+}
+
+
+.user-info i {
+
+    font-size: 35px;
+
+    color: white;
+
+}
+
+
+.user-info div {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.user-info strong {
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+.user-info span {
+
+    color: #cfcfcf;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+
+}
+
+/* ========================= */
+/* CERRAR SESIÓN */
+/* ========================= */
+
+.logout {
+
+    margin: 20px 15px;
+
+}
+
+
+.logout a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+
+}
+
+
+.logout a:hover {
+
+    background: rgba(255,255,255,0.1);
+
+}
+
+
+.logout i {
+
+    font-size: 18px;
+
+}

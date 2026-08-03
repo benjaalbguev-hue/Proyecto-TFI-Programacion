@@ -50,6 +50,33 @@
 
         </div>
 
+        <!-- USUARIO LOGUEADO -->
+
+<div class="user-info">
+
+    <i class="fa-solid fa-circle-user"></i>
+
+    <div>
+
+        <strong>
+            {{ session["nombre"] }} {{ session["apellido"] }}
+        </strong>
+
+
+        {% if session["rol_id"] == 1 %}
+
+            <span>Administrador</span>
+
+        {% else %}
+
+            <span>Empleado</span>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
         <nav>
 
             <ul>
@@ -90,33 +117,55 @@
 
                 </li>
 
-                <li>
+               
+                   {% if session["rol_id"] == 1 %}
 
-                    <a href="#">
+<li>
 
-                        <i class="fa-solid fa-user-gear"></i>
+    <a href="/usuarios">
 
-                        <span>Usuarios</span>
+        <i class="fa-solid fa-user-gear"></i>
 
-                    </a>
+        <span>Usuarios</span>
 
-                </li>
+    </a>
 
-                <li>
+</li>
 
-                   <a href="{{ url_for('reportes') }}">
+{% endif %}
 
-                        <i class="fa-solid fa-chart-column"></i>
+                    {% if session["rol_id"] == 1 %}
 
-                        <span>Reportes</span>
+<li>
 
-                    </a>
+    <a href="{{ url_for('reportes') }}">
 
-                </li>
+        <i class="fa-solid fa-chart-column"></i>
 
+        <span>Reportes</span>
+
+    </a>
+
+</li>
+
+{% endif %}
             </ul>
 
         </nav>
+
+        <!-- CERRAR SESIÓN -->
+
+<div class="logout">
+
+    <a href="/logout">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        <span>Cerrar sesión</span>
+
+    </a>
+
+</div>
 
     </aside>
 

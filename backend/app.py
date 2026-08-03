@@ -1,26 +1,146 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 from database import get_connection
 
 app = Flask(__name__, template_folder="templates")
+app.secret_key = "servicio_tecnico_clave_secreta"
+
+from functools import wraps
+
+
+def login_required(func):
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+
+        if "usuario_id" not in session:
+
+            return redirect("/login")
+
+        return func(*args, **kwargs)
+
+    return wrapper
+
+def rol_required(rol):
+
+    def decorator(func):
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+
+            if "usuario_id" not in session:
+
+                return redirect("/login")
+
+
+            if session.get("rol_id") != rol:
+
+                return redirect("/clientes")
+
+
+            return func(*args, **kwargs)
+
+
+        return wrapper
+
+    return decorator
 
 
 @app.route("/")
 def inicio():
-    return render_template("index.html")
+    return redirect(url_for("login"))
 
 @app.route("/clientes/nuevo")
+@login_required
 def nuevo_cliente():
     return render_template("cliente_form.html")
 
 @app.route("/servicios/nuevo")
+@login_required
 def nuevo_servicio():
     return render_template("servicio_form.html")
 
 @app.route("/servicios")
+@login_required
 def listar_servicios():
     return render_template("servicios.html")
 
+@app.route("/clientes")
+@login_required
+def clientes():
+
+    print(session)
+
+    return render_template("index.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/login")
+
+@app.route("/login", methods=["POST"])
+def validar_login():
+
+    datos = request.get_json()
+
+    correo = datos["correo"]
+    contrasena = datos["contrasena"]
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT UsuarioId,
+               Nombre,
+               Apellido,
+               RolId
+        FROM USUARIO
+        WHERE Correo = ?
+        AND Contrasena = ?
+    """, (correo, contrasena))
+
+    usuario = cursor.fetchone()
+
+    conexion.close()
+
+
+    if usuario:
+
+        # Guardar datos del usuario en sesión
+
+        session["usuario_id"] = usuario[0]
+        session["nombre"] = usuario[1]
+        session["apellido"] = usuario[2]
+        session["rol_id"] = usuario[3]
+
+
+        return jsonify({
+            "ok": True
+        })
+
+
+    else:
+
+        return jsonify({
+            "ok": False,
+            "mensaje": "Correo o contraseña incorrectos."
+        })
+
+@app.route("/usuarios")
+@login_required
+@rol_required(1)
+def usuarios():
+
+    return "Módulo de usuarios"
+
 @app.route("/reportes")
+@login_required
+@rol_required(1)
 def reportes():
 
     return render_template("reportes.html")
@@ -469,8 +589,8 @@ def actualizar_cliente(id):
             "error": str(e)
         }), 500
 
-@app.route("/clientes")
-def clientes():
+@app.route("/api/clientes")
+def obtener_clientes():
 
     conexion = get_connection()
     cursor = conexion.cursor()
@@ -490,6 +610,7 @@ def clientes():
     clientes = []
 
     for fila in cursor.fetchall():
+
         cliente = {
             "clienteid": fila[0],
             "dni": fila[1],
@@ -507,6 +628,7 @@ def clientes():
     return jsonify(clientes)
 
 @app.route("/equipos/nuevo")
+@login_required
 def nuevo_equipo():
 
     return render_template("equipo_form.html")

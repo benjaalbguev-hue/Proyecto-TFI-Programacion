@@ -1,0 +1,204 @@
+/* ======================================
+   GENERAL
+====================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+
+    background:#f5f7fb;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
+}
+
+
+/* ======================================
+   CONTENEDOR
+====================================== */
+
+.login-container{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+/* ======================================
+   TARJETA
+====================================== */
+
+.login-card{
+
+    width:420px;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+/* ======================================
+   LOGO
+====================================== */
+
+.logo{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+.logo i{
+
+    font-size:55px;
+
+    color:#2563eb;
+
+    margin-bottom:15px;
+
+}
+
+.logo h1{
+
+    font-size:28px;
+
+    color:#1e293b;
+
+    font-weight:600;
+
+}
+
+.logo p{
+
+    color:#64748b;
+
+    margin-top:8px;
+
+}
+
+
+/* ======================================
+   FORMULARIO
+====================================== */
+
+.form-group{
+
+    margin-bottom:22px;
+
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#334155;
+
+    font-weight:500;
+
+}
+
+.form-group input{
+
+    width:100%;
+
+    padding:12px 15px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.form-group input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+
+/* ======================================
+   BOTÓN
+====================================== */
+
+.btn-login{
+
+    width:100%;
+
+    margin-top:10px;
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.btn-login:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+/* ======================================
+   FOOTER
+====================================== */
+
+.copyright{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    font-size:13px;
+
+    color:#94a3b8;
+
+}

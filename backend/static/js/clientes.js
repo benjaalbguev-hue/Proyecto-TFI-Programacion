@@ -23,7 +23,7 @@ async function cargarClientes() {
 
     try {
 
-        const respuesta = await fetch("/clientes");
+   const respuesta = await fetch("/api/clientes");
 
         clientes = await respuesta.json();
 
