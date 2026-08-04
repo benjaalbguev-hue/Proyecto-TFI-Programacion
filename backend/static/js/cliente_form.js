@@ -96,7 +96,7 @@ if (respuesta.ok) {
 
     alert(resultado.mensaje);
 
-    window.location.href = "/";
+    window.location.href = "/clientes";
 
 } else {
 

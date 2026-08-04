@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Servicio Técnico - Usuarios</title>
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS PRINCIPAL -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- CSS USUARIOS -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/usuarios.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-computer"></i>
+
+            <h2>
+                Servicio<br>
+                Técnico
+            </h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                        <a href="{{ url_for('clientes') }}">
+                            
+                        <i class="fa-solid fa-users"></i>
+
+                        <span>Clientes</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="/equipos/nuevo">
+
+                        <i class="fa-solid fa-laptop"></i>
+
+                        <span>Equipos</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('listar_servicios') }}">
+
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                        <span>Servicios</span>
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="{{ url_for('usuarios') }}">
+
+                        <i class="fa-solid fa-user-gear"></i>
+
+                        <span>Usuarios</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('reportes') }}">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <span>Reportes</span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Usuarios</h1>
+
+                <p>Inicio / <strong>Usuarios</strong></p>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-primary"
+                onclick="window.location.href='/usuarios/nuevo'">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Usuario
+
+            </button>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- BUSCADOR -->
+        <!-- ========================= -->
+
+        <div class="search-container">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="buscarUsuario"
+                    placeholder="Buscar usuario...">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- TABLA -->
+        <!-- ========================= -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Apellido</th>
+
+                        <th>Nombre</th>
+
+                        <th>Correo</th>
+
+                        <th>Rol</th>
+
+                        <th>Acciones</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaUsuarios">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="table-footer">
+
+            <span id="cantidadUsuarios">
+
+                Mostrando 0 usuarios
+
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
+
+</body>
+
+</html>

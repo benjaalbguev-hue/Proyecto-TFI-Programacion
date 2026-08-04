@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Servicio Técnico - Usuario</title>
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS PRINCIPAL -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- REUTILIZAMOS EL CSS DEL FORMULARIO DE CLIENTES -->
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/cliente_form.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-computer"></i>
+
+            <h2>
+                Servicio<br>
+                Técnico
+            </h2>
+
+        </div>
+
+        <!-- USUARIO LOGUEADO -->
+
+        <div class="user-info">
+
+            <i class="fa-solid fa-circle-user"></i>
+
+            <div>
+
+                <strong>
+                    {{ session["nombre"] }} {{ session["apellido"] }}
+                </strong>
+
+                {% if session["rol_id"] == 1 %}
+
+                    <span>Administrador</span>
+
+                {% else %}
+
+                    <span>Empleado</span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                    <a href="{{ url_for('clientes') }}">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <span>Clientes</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="/equipos/nuevo">
+
+                        <i class="fa-solid fa-laptop"></i>
+
+                        <span>Equipos</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('listar_servicios') }}">
+
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                        <span>Servicios</span>
+
+                    </a>
+
+                </li>
+
+                {% if session["rol_id"] == 1 %}
+
+                <li class="active">
+
+                    <a href="{{ url_for('usuarios') }}">
+
+                        <i class="fa-solid fa-user-gear"></i>
+
+                        <span>Usuarios</span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="{{ url_for('reportes') }}">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <span>Reportes</span>
+
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+        <!-- CERRAR SESIÓN -->
+
+        <div class="logout">
+
+            <a href="/logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Cerrar sesión</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+        <div class="form-card">
+
+            <div class="form-header">
+
+                {% if usuario %}
+
+                    <h1>Editar Usuario</h1>
+
+                    <p>
+                        Inicio /
+                        <strong>Usuarios</strong> /
+                        Editar
+                    </p>
+
+                {% else %}
+
+                    <h1>Nuevo Usuario</h1>
+
+                    <p>
+                        Inicio /
+                        <strong>Usuarios</strong> /
+                        Nuevo
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+            <form
+                id="formUsuario"
+                data-id="{{ usuario.usuarioId if usuario else '' }}">
+
+                <div class="form-grid">
+
+                    <!-- APELLIDO -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Apellido <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="apellido"
+                            value="{{ usuario.apellido if usuario else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- NOMBRE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Nombre <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nombre"
+                            value="{{ usuario.nombre if usuario else '' }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <!-- CORREO -->
+
+                <div class="form-group">
+
+                    <label>
+                        Correo <span>*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="correo"
+                        value="{{ usuario.correo if usuario else '' }}"
+                        required>
+
+                </div>
+
+                <!-- CONTRASEÑA -->
+
+                <div class="form-group">
+
+                    <label>
+                        Contraseña <span>*</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        id="contrasena"
+                        value="{{ usuario.contrasena if usuario else '' }}"
+                        required>
+
+                </div>
+
+                <!-- ROL -->
+
+                <div class="form-group">
+
+                    <label>
+                        Rol <span>*</span>
+                    </label>
+
+                    <select id="rol" required>
+
+                        <option
+                            value=""
+                            disabled
+                            {% if not usuario %}selected{% endif %}>
+
+                            Seleccione un rol
+
+                        </option>
+
+                        <option
+                            value="1"
+                            {% if usuario and usuario.rolId == 1 %}selected{% endif %}>
+
+                            Administrador
+
+                        </option>
+
+                        <option
+                            value="2"
+                            {% if usuario and usuario.rolId == 2 %}selected{% endif %}>
+
+                            Empleado
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- BOTONES -->
+
+                <div class="form-buttons">
+
+                    <button
+                        type="button"
+                        class="btn-cancel"
+                        onclick="window.location.href='/usuarios'">
+
+                        Cancelar
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-save">
+
+                        Guardar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/usuario_form.js') }}"></script>
+
+</body>
+
+</html>

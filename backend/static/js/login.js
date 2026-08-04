@@ -9,39 +9,59 @@ const formulario = document.getElementById("formLogin");
 // LOGIN
 // ======================================
 
-formulario.addEventListener("submit", async function (e) {
+formulario.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-    const correo = document.getElementById("correo").value.trim();
-    const contrasena = document.getElementById("contrasena").value;
+    const correo =
+        document.getElementById("correo").value.trim();
 
-    const respuesta = await fetch("/login", {
+    const contrasena =
+        document.getElementById("contrasena").value;
 
-        method: "POST",
+    try{
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+        const respuesta = await fetch("/login", {
 
-        body: JSON.stringify({
+            method: "POST",
 
-            correo,
-            contrasena
+            headers: {
 
-        })
+                "Content-Type": "application/json"
 
-    });
+            },
 
-    const resultado = await respuesta.json();
+            body: JSON.stringify({
 
-    if (resultado.ok) {
+                correo: correo,
 
-        window.location.href = "/clientes";
+                contrasena: contrasena
 
-    } else {
+            })
 
-        alert(resultado.mensaje);
+        });
+
+        const resultado = await respuesta.json();
+
+        console.log("Respuesta del login:", resultado);
+
+        if(respuesta.ok && resultado.ok){
+
+            window.location.href = "/clientes";
+
+        }
+        else{
+
+            alert(resultado.mensaje || "No se pudo iniciar sesión.");
+
+        }
+
+    }
+    catch(error){
+
+        console.error("Error al iniciar sesión:", error);
+
+        alert("Ocurrió un error al conectar con el servidor.");
 
     }
 

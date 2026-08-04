@@ -47,6 +47,11 @@ def rol_required(rol):
 
 @app.route("/")
 def inicio():
+
+    if "usuario_id" in session:
+
+        return redirect(url_for("clientes"))
+
     return redirect(url_for("login"))
 
 @app.route("/clientes/nuevo")
@@ -95,10 +100,11 @@ def validar_login():
     cursor = conexion.cursor()
 
     cursor.execute("""
-        SELECT UsuarioId,
-               Nombre,
-               Apellido,
-               RolId
+        SELECT
+            UsuarioId,
+            Nombre,
+            Apellido,
+            RolId
         FROM USUARIO
         WHERE Correo = ?
         AND Contrasena = ?
@@ -108,35 +114,216 @@ def validar_login():
 
     conexion.close()
 
-
     if usuario:
-
-        # Guardar datos del usuario en sesión
 
         session["usuario_id"] = usuario[0]
         session["nombre"] = usuario[1]
         session["apellido"] = usuario[2]
         session["rol_id"] = usuario[3]
 
-
         return jsonify({
             "ok": True
         })
 
+    return jsonify({
+        "ok": False,
+        "mensaje": "Correo o contraseña incorrectos."
+    })
 
-    else:
-
-        return jsonify({
-            "ok": False,
-            "mensaje": "Correo o contraseña incorrectos."
-        })
-
+    
 @app.route("/usuarios")
 @login_required
 @rol_required(1)
 def usuarios():
 
-    return "Módulo de usuarios"
+    return render_template("usuarios.html")
+
+
+@app.route("/usuarios/buscar")
+@login_required
+@rol_required(1)
+def buscar_usuarios():
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            u.UsuarioId,
+            u.Apellido,
+            u.Nombre,
+            u.Correo,
+            r.Descripcion
+        FROM USUARIO u
+        INNER JOIN ROL r
+            ON u.RolId = r.RolId
+        ORDER BY u.Apellido, u.Nombre
+    """)
+
+    usuarios = []
+
+    for fila in cursor.fetchall():
+
+        usuarios.append({
+            "usuarioId": fila[0],
+            "apellido": fila[1],
+            "nombre": fila[2],
+            "correo": fila[3],
+            "rol": fila[4]
+        })
+
+    conexion.close()
+
+    return jsonify(usuarios)
+
+
+@app.route("/usuarios/nuevo")
+@login_required
+@rol_required(1)
+def nuevo_usuario():
+
+    return render_template("usuario_form.html")
+
+@app.route("/usuarios/guardar", methods=["POST"])
+@login_required
+@rol_required(1)
+def guardar_usuario():
+
+    try:
+
+        data = request.get_json()
+
+        conexion = get_connection()
+        cursor = conexion.cursor()
+
+        cursor.execute("""
+            INSERT INTO USUARIO
+            (
+                Correo,
+                Apellido,
+                Nombre,
+                Contrasena,
+                RolId
+            )
+            VALUES (?,?,?,?,?)
+        """,
+        (
+            data["correo"],
+            data["apellido"],
+            data["nombre"],
+            data["contrasena"],
+            data["rolId"]
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return jsonify({
+            "mensaje": "Usuario guardado correctamente."
+        })
+
+    except Exception as e:
+
+        print(e)
+
+        return jsonify({
+            "mensaje": str(e)
+        }), 500
+
+
+@app.route("/usuarios/editar/<int:id>") 
+@login_required
+@rol_required(1)
+def editar_usuario(id):
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            UsuarioId,
+            Correo,
+            Apellido,
+            Nombre,
+            Contrasena,
+            RolId
+        FROM USUARIO
+        WHERE UsuarioId = ?
+    """, (id,))
+
+    fila = cursor.fetchone()
+
+    conexion.close()
+
+    if fila is None:
+
+        return "Usuario no encontrado", 404
+
+    usuario = {
+
+        "usuarioId": fila[0],
+        "correo": fila[1],
+        "apellido": fila[2],
+        "nombre": fila[3],
+        "contrasena": fila[4],
+        "rolId": fila[5]
+
+    }
+
+    return render_template(
+
+        "usuario_form.html",
+
+        usuario=usuario
+
+    )
+
+@app.route("/usuarios/actualizar/<int:id>", methods=["PUT"])
+@login_required
+@rol_required(1)
+def actualizar_usuario(id):
+
+    try:
+
+        data = request.get_json()
+
+        conexion = get_connection()
+        cursor = conexion.cursor()
+
+        cursor.execute("""
+            UPDATE USUARIO
+            SET
+                Correo = ?,
+                Apellido = ?,
+                Nombre = ?,
+                Contrasena = ?,
+                RolId = ?
+            WHERE UsuarioId = ?
+        """,
+        (
+            data["correo"],
+            data["apellido"],
+            data["nombre"],
+            data["contrasena"],
+            data["rolId"],
+            id
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return jsonify({
+            "mensaje": "Usuario actualizado correctamente."
+        })
+
+    except Exception as e:
+
+        print(e)
+
+        return jsonify({
+            "mensaje": str(e)
+        }), 500
+
 
 @app.route("/reportes")
 @login_required
@@ -145,7 +332,10 @@ def reportes():
 
     return render_template("reportes.html")
 
+
 @app.route("/reportes/datos")
+@login_required
+@rol_required(1)
 def datos_reportes():
 
     conexion = get_connection()
