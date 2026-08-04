@@ -5,23 +5,48 @@
 let usuarios = [];
 
 const tabla = document.getElementById("tablaUsuarios");
-
 const buscador = document.getElementById("buscarUsuario");
-
 const cantidad = document.getElementById("cantidadUsuarios");
+const cantidadMostrar = document.getElementById("cantidadMostrar");
+
+let paginaActual = 1;
+let registrosPorPagina = 10;
+
+
+// ======================================
+// CAMBIAR CANTIDAD A MOSTRAR
+// ======================================
+
+cantidadMostrar.addEventListener("change", function () {
+
+    if (this.value === "todos") {
+        registrosPorPagina = usuarios.length;
+    } else {
+        registrosPorPagina = parseInt(this.value);
+    }
+
+    paginaActual = 1;
+
+    aplicarFiltro();
+
+});
 
 
 // ======================================
 // CARGAR USUARIOS
 // ======================================
 
-async function cargarUsuarios(){
+async function cargarUsuarios() {
 
     const respuesta = await fetch("/usuarios/buscar");
 
     usuarios = await respuesta.json();
 
-    mostrarUsuarios(usuarios);
+    if (cantidadMostrar.value === "todos") {
+        registrosPorPagina = usuarios.length;
+    }
+
+    aplicarFiltro();
 
 }
 
@@ -30,20 +55,17 @@ async function cargarUsuarios(){
 // MOSTRAR USUARIOS
 // ======================================
 
-function mostrarUsuarios(lista){
+function mostrarUsuarios(lista) {
 
     tabla.innerHTML = "";
 
-    if(lista.length === 0){
+    if (lista.length === 0) {
 
         tabla.innerHTML = `
             <tr>
                 <td colspan="6" class="sin-usuarios">
-
                     <i class="fa-solid fa-user-slash"></i>
-
                     No se encontraron usuarios.
-
                 </td>
             </tr>
         `;
@@ -54,24 +76,22 @@ function mostrarUsuarios(lista){
 
     }
 
-    lista.forEach(usuario=>{
+    const inicio = (paginaActual - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+
+    const usuariosPagina = lista.slice(inicio, fin);
+
+    usuariosPagina.forEach(usuario => {
 
         let claseRol = "rol-otro";
 
-        if(usuario.rol === "Administrador"){
-
+        if (usuario.rol === "Administrador") {
             claseRol = "rol-administrador";
-
-        }
-
-        else if(usuario.rol === "Empleado"){
-
+        } else if (usuario.rol === "Empleado") {
             claseRol = "rol-empleado";
-
         }
 
         tabla.innerHTML += `
-
             <tr>
 
                 <td>${usuario.usuarioId}</td>
@@ -83,17 +103,12 @@ function mostrarUsuarios(lista){
                 <td>${usuario.correo}</td>
 
                 <td>
-
                     <span class="usuario-rol ${claseRol}">
-
                         ${usuario.rol}
-
                     </span>
-
                 </td>
 
                 <td>
-
                     <button
                         class="btn-edit-user"
                         onclick="editarUsuario(${usuario.usuarioId})">
@@ -101,17 +116,36 @@ function mostrarUsuarios(lista){
                         <i class="fa-solid fa-pen"></i>
 
                     </button>
-
                 </td>
 
             </tr>
-
         `;
 
     });
 
     cantidad.textContent =
-        `Mostrando ${lista.length} usuarios`;
+        `Mostrando ${usuariosPagina.length} de ${lista.length} usuarios`;
+
+}
+
+
+// ======================================
+// APLICAR FILTRO
+// ======================================
+
+function aplicarFiltro() {
+
+    const texto = buscador.value.toLowerCase();
+
+    const filtrados = usuarios.filter(usuario =>
+
+        usuario.nombre.toLowerCase().includes(texto) ||
+        usuario.apellido.toLowerCase().includes(texto) ||
+        usuario.correo.toLowerCase().includes(texto)
+
+    );
+
+    mostrarUsuarios(filtrados);
 
 }
 
@@ -120,29 +154,11 @@ function mostrarUsuarios(lista){
 // BUSCADOR
 // ======================================
 
-buscador.addEventListener("input", function(){
+buscador.addEventListener("input", function () {
 
-    const texto = this.value.toLowerCase();
+    paginaActual = 1;
 
-    const filtrados = usuarios.filter(usuario=>{
-
-        return(
-
-            usuario.nombre.toLowerCase().includes(texto)
-
-            ||
-
-            usuario.apellido.toLowerCase().includes(texto)
-
-            ||
-
-            usuario.correo.toLowerCase().includes(texto)
-
-        );
-
-    });
-
-    mostrarUsuarios(filtrados);
+    aplicarFiltro();
 
 });
 
@@ -151,10 +167,9 @@ buscador.addEventListener("input", function(){
 // EDITAR
 // ======================================
 
-function editarUsuario(id){
+function editarUsuario(id) {
 
-    window.location.href =
-        `/usuarios/editar/${id}`;
+    window.location.href = `/usuarios/editar/${id}`;
 
 }
 

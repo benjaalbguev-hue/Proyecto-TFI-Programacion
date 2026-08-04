@@ -54,6 +54,34 @@
 
         </div>
 
+        <!-- USUARIO LOGUEADO -->
+
+<div class="user-info">
+
+    <i class="fa-solid fa-circle-user"></i>
+
+    <div>
+
+        <strong>
+            {{ session["nombre"] }} {{ session["apellido"] }}
+        </strong>
+
+
+        {% if session["rol_id"] == 1 %}
+
+            <span>Administrador</span>
+
+        {% else %}
+
+            <span>Empleado</span>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
         <nav>
 
             <ul>
@@ -122,6 +150,20 @@
 
         </nav>
 
+        <!-- CERRAR SESIÓN -->
+
+        <div class="logout">
+
+            <a href="/logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Cerrar sesión</span>
+
+            </a>
+
+        </div>
+
     </aside>
 
     <!-- ========================= -->
@@ -153,25 +195,48 @@
 
         </div>
 
-        <!-- ========================= -->
-        <!-- BUSCADOR -->
-        <!-- ========================= -->
+ <!-- ========================= -->
+<!-- BUSCADOR Y FILTRO -->
+<!-- ========================= -->
 
-        <div class="search-container">
+<div class="top-bar">
 
-            <div class="search-box">
+    <div class="search-container">
 
-                <input
-                    type="text"
-                    id="buscarUsuario"
-                    placeholder="Buscar usuario...">
+        <div class="search-box">
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+                type="text"
+                id="buscarUsuario"
+                placeholder="Buscar usuario...">
 
-            </div>
+            <i class="fa-solid fa-magnifying-glass"></i>
 
         </div>
 
+    </div>
+
+    <div class="filter-box">
+
+        <label for="cantidadMostrar">
+            Mostrar
+        </label>
+
+        <select id="cantidadMostrar">
+
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="todos">Todos</option>
+
+        </select>
+
+        <span>usuarios</span>
+
+    </div>
+
+</div>
         <!-- ========================= -->
         <!-- TABLA -->
         <!-- ========================= -->

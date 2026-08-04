@@ -114,12 +114,12 @@ function mostrarClientes(lista) {
                         </button>
 
                         <button
-                            class="btn-history"
-                            onclick="window.location.href='/clientes/${cliente.clienteid}/historial'">
+    class="btn-history"
+    onclick="verHistorial(${cliente.clienteid})">
 
-                            <i class="fa-solid fa-clock-rotate-left"></i>
+    <i class="fa-solid fa-clock-rotate-left"></i>
 
-                        </button>
+</button>
 
                     </div>
 
@@ -155,3 +155,44 @@ selectorCantidad.addEventListener("change", aplicarFiltros);
 // ======================================
 
 cargarClientes();
+
+// ======================================
+// MODAL HISTORIAL DE SERVICIOS
+// ======================================
+
+const modal = document.getElementById("modalHistorial");
+const tablaHistorial = document.getElementById("tablaHistorial");
+const cerrarModal = document.getElementById("cerrarModal");
+
+cerrarModal.addEventListener("click", () => {
+
+    modal.style.display = "none";
+
+});
+
+window.addEventListener("click", (e) => {
+
+    if (e.target === modal) {
+
+        modal.style.display = "none";
+
+    }
+
+});
+
+async function verHistorial(clienteId) {
+
+    alert("Entró");
+
+    console.log(modal);
+
+    if (modal == null) {
+        alert("Modal es NULL");
+        return;
+    }
+
+    modal.style.display = "flex";
+
+    alert("Display cambiado");
+
+}

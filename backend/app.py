@@ -921,6 +921,61 @@ def buscar_clientes():
 
     return jsonify(clientes)
 
+@app.route("/clientes/<int:clienteId>/servicios")
+def servicios_cliente(clienteId):
+
+    conexion = get_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT
+            s.ServicioId,
+            s.FechaIngreso,
+            e.TipoEquipo,
+            e.Marca,
+            e.Modelo,
+            est.Descripcion,
+            s.ProblemaReportado,
+            s.Total
+        FROM SERVICIO s
+        INNER JOIN EQUIPO e
+            ON s.EquipoId = e.EquipoId
+        INNER JOIN ESTADO est
+            ON s.EstadoId = est.EstadoId
+        WHERE s.ClienteId = ?
+        ORDER BY s.FechaIngreso DESC
+    """, (clienteId,))
+
+    servicios = []
+
+    for fila in cursor.fetchall():
+
+        servicios.append({
+
+            "servicioId": fila[0],
+
+            "fechaIngreso":
+                fila[1].strftime("%d/%m/%Y")
+                if fila[1] else "",
+
+            "equipo":
+                f"{fila[2]} - {fila[3]} {fila[4]}",
+
+            "estado":
+                fila[5],
+
+            "problema":
+                fila[6],
+
+            "total":
+                float(fila[7]) if fila[7] is not None else 0
+
+        })
+
+    conexion.close()
+
+    return jsonify(servicios)
+
 @app.route("/equipos/buscar")
 def buscar_equipos():
 
