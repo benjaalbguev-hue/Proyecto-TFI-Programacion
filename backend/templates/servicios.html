@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -9,7 +9,6 @@
 
     <title>Servicio Técnico - Servicios</title>
 
-
     <!-- Google Fonts -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,18 +16,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-
     <!-- Font Awesome -->
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-
     <!-- CSS PRINCIPAL -->
 
     <link rel="stylesheet"
         href="{{ url_for('static', filename='css/style.css') }}">
-
 
     <!-- CSS SERVICIOS -->
 
@@ -37,19 +33,15 @@
 
 </head>
 
-
 <body>
 
-
 <div class="container">
-
 
     <!-- ========================= -->
     <!-- SIDEBAR -->
     <!-- ========================= -->
 
     <aside class="sidebar">
-
 
         <div class="logo">
 
@@ -62,44 +54,49 @@
 
         </div>
 
+        <!-- ========================= -->
         <!-- USUARIO LOGUEADO -->
+        <!-- ========================= -->
 
-<div class="user-info">
+        <div class="user-info">
 
-    <i class="fa-solid fa-circle-user"></i>
+            <i class="fa-solid fa-circle-user"></i>
 
-    <div>
+            <div>
 
-        <strong>
-            {{ session["nombre"] }} {{ session["apellido"] }}
-        </strong>
+                <strong>
 
+                    {{ session["nombre"] }} {{ session["apellido"] }}
 
-        {% if session["rol_id"] == 1 %}
+                </strong>
 
-            <span>Administrador</span>
+                {% if session["rol_id"] == 1 %}
 
-        {% else %}
+                    <span>Administrador</span>
 
-            <span>Empleado</span>
+                {% else %}
 
-        {% endif %}
+                    <span>Empleado</span>
 
-    </div>
+                {% endif %}
 
-</div>
+            </div>
 
+        </div>
+
+        <!-- ========================= -->
+        <!-- MENÚ -->
+        <!-- ========================= -->
 
         <nav>
 
             <ul>
 
-
                 <!-- CLIENTES -->
 
                 <li>
 
-                        <a href="{{ url_for('clientes') }}">
+                    <a href="{{ url_for('clientes') }}">
 
                         <i class="fa-solid fa-users"></i>
 
@@ -108,7 +105,6 @@
                     </a>
 
                 </li>
-
 
                 <!-- EQUIPOS -->
 
@@ -124,12 +120,11 @@
 
                 </li>
 
-
                 <!-- SERVICIOS -->
 
                 <li class="active">
 
-                   <a href="{{ url_for('listar_servicios') }}">
+                    <a href="{{ url_for('listar_servicios') }}">
 
                         <i class="fa-solid fa-screwdriver-wrench"></i>
 
@@ -139,59 +134,63 @@
 
                 </li>
 
+                <!-- USUARIOS -->
 
-                   {% if session["rol_id"] == 1 %}
+                {% if session["rol_id"] == 1 %}
 
-<li>
+                <li>
 
-    <a href="/usuarios">
+                    <a href="/usuarios">
 
-        <i class="fa-solid fa-user-gear"></i>
+                        <i class="fa-solid fa-user-gear"></i>
 
-        <span>Usuarios</span>
+                        <span>Usuarios</span>
 
-    </a>
+                    </a>
 
-</li>
+                </li>
 
-{% endif %}
+                {% endif %}
 
-                    {% if session["rol_id"] == 1 %}
+                <!-- REPORTES -->
 
-<li>
+                {% if session["rol_id"] == 1 %}
 
-    <a href="{{ url_for('reportes') }}">
+                <li>
 
-        <i class="fa-solid fa-chart-column"></i>
+                    <a href="{{ url_for('reportes') }}">
 
-        <span>Reportes</span>
+                        <i class="fa-solid fa-chart-column"></i>
 
-    </a>
+                        <span>Reportes</span>
 
-</li>
+                    </a>
 
-{% endif %}
+                </li>
 
+                {% endif %}
 
             </ul>
 
         </nav>
 
-<!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
+        <!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
 
-<div class="logout">
+        <div class="logout">
 
-    <a href="/logout">
+            <a href="/logout">
 
-        <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-        <span>Cerrar sesión</span>
+                <span>Cerrar sesión</span>
 
-    </a>
+            </a>
 
-</div>
+        </div>
+
     </aside>
-
 
     <!-- ========================= -->
     <!-- CONTENIDO -->
@@ -199,24 +198,21 @@
 
     <main class="content">
 
-
         <!-- ========================= -->
         <!-- ENCABEZADO -->
         <!-- ========================= -->
 
         <div class="page-header">
 
-
             <div>
 
-                <h1>Servicios  Técnicos</h1>
+                <h1>Servicios Técnicos</h1>
 
                 <p>
                     Inicio / Listado / <strong>Seguimiento</strong>
                 </p>
 
             </div>
-
 
             <button
                 class="btn-primary"
@@ -228,9 +224,7 @@
 
             </button>
 
-
         </div>
-
 
         <!-- ========================= -->
         <!-- FILTROS -->
@@ -238,76 +232,60 @@
 
         <div class="filters-container">
 
-
             <!-- BUSCADOR -->
 
             <div class="search-box">
-
 
                 <input
                     type="text"
                     id="buscarServicio"
                     placeholder="Buscar servicio...">
 
-
                 <i class="fa-solid fa-magnifying-glass"></i>
 
-
             </div>
-
 
             <!-- ESTADO -->
 
             <div class="filter-group">
 
-
                 <label>Estado</label>
-
 
                 <select id="filtroEstado">
 
-                    <option value="">Todos</option>
+                    <option value="">
+                        Todos
+                    </option>
 
                 </select>
 
-
             </div>
-
 
             <!-- FECHA DESDE -->
 
             <div class="filter-group">
 
-
                 <label>Desde</label>
-
 
                 <input
                     type="date"
                     id="fechaDesde">
 
-
             </div>
-
 
             <!-- FECHA HASTA -->
 
             <div class="filter-group">
 
-
                 <label>Hasta</label>
-
 
                 <input
                     type="date"
                     id="fechaHasta">
 
-
             </div>
 
-
         </div>
-
 
         <!-- ========================= -->
         <!-- TABLA -->
@@ -315,12 +293,9 @@
 
         <div class="table-container">
 
-
             <table>
 
-
                 <thead>
-
 
                     <tr>
 
@@ -340,29 +315,17 @@
 
                     </tr>
 
-
                 </thead>
-
 
                 <tbody id="tablaServicios">
 
-
-                    <!--
-
-                    Los servicios se cargarán
-                    automáticamente desde Flask.
-
-                    -->
-
+                    <!-- Los servicios se cargan desde Flask -->
 
                 </tbody>
 
-
             </table>
 
-
         </div>
-
 
         <!-- ========================= -->
         <!-- PIE DE TABLA -->
@@ -370,16 +333,13 @@
 
         <div class="table-footer">
 
-
             <span id="cantidadServicios">
 
                 Mostrando 0 servicios
 
             </span>
 
-
             <div class="pagination">
-
 
                 <button>
 
@@ -387,13 +347,11 @@
 
                 </button>
 
-
                 <button class="active-page">
 
                     1
 
                 </button>
-
 
                 <button>
 
@@ -401,31 +359,33 @@
 
                 </button>
 
-
             </div>
-
 
         </div>
 
-
     </main>
-
 
 </div>
 
 <!-- ========================= -->
-<!-- MODAL VER SERVICIO -->
+<!-- MODAL DETALLE DEL SERVICIO -->
 <!-- ========================= -->
 
-<div id="modalServicio" class="modal">
+<div
+    id="modalServicio"
+    class="modal-servicio">
 
     <div class="modal-content">
 
         <div class="modal-header">
 
-            <h2>Detalle del Servicio</h2>
+            <h2>
+                Detalle del Servicio
+            </h2>
 
-            <button id="cerrarModal" class="btn-close">
+            <button
+                id="cerrarModal"
+                class="btn-close">
 
                 <i class="fa-solid fa-xmark"></i>
 
@@ -438,48 +398,75 @@
             <div class="detalle-grid">
 
                 <div>
+
                     <strong>Cliente</strong>
+
                     <p id="detalleCliente"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Equipo</strong>
+
                     <p id="detalleEquipo"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Estado</strong>
+
                     <p id="detalleEstado"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Fecha de ingreso</strong>
+
                     <p id="detalleIngreso"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Problema</strong>
+
                     <p id="detalleProblema"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Diagnóstico</strong>
+
                     <p id="detalleDiagnostico"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Solución</strong>
+
                     <p id="detalleSolucion"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Total</strong>
+
                     <p id="detalleTotal"></p>
+
                 </div>
 
                 <div>
+
                     <strong>Fecha de entrega</strong>
+
                     <p id="detalleEntrega"></p>
+
                 </div>
 
             </div>
@@ -490,13 +477,17 @@
 
 </div>
 
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- ========================= -->
 <!-- JAVASCRIPT -->
 <!-- ========================= -->
 
 <script src="{{ url_for('static', filename='js/servicios.js') }}"></script>
-
 
 </body>
 

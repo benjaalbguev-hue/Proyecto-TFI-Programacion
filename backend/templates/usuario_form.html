@@ -26,7 +26,7 @@
     <link rel="stylesheet"
         href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!-- REUTILIZAMOS EL CSS DEL FORMULARIO DE CLIENTES -->
+    <!-- CSS DEL FORMULARIO -->
 
     <link rel="stylesheet"
         href="{{ url_for('static', filename='css/cliente_form.css') }}">
@@ -54,7 +54,9 @@
 
         </div>
 
+        <!-- ========================= -->
         <!-- USUARIO LOGUEADO -->
+        <!-- ========================= -->
 
         <div class="user-info">
 
@@ -63,7 +65,9 @@
             <div>
 
                 <strong>
+
                     {{ session["nombre"] }} {{ session["apellido"] }}
+
                 </strong>
 
                 {% if session["rol_id"] == 1 %}
@@ -80,9 +84,15 @@
 
         </div>
 
+        <!-- ========================= -->
+        <!-- MENÚ -->
+        <!-- ========================= -->
+
         <nav>
 
             <ul>
+
+                <!-- CLIENTES -->
 
                 <li>
 
@@ -96,6 +106,8 @@
 
                 </li>
 
+                <!-- EQUIPOS -->
+
                 <li>
 
                     <a href="/equipos/nuevo">
@@ -108,6 +120,8 @@
 
                 </li>
 
+                <!-- SERVICIOS -->
+
                 <li>
 
                     <a href="{{ url_for('listar_servicios') }}">
@@ -119,6 +133,8 @@
                     </a>
 
                 </li>
+
+                <!-- USUARIOS -->
 
                 {% if session["rol_id"] == 1 %}
 
@@ -133,6 +149,8 @@
                     </a>
 
                 </li>
+
+                <!-- REPORTES -->
 
                 <li>
 
@@ -152,7 +170,9 @@
 
         </nav>
 
+        <!-- ========================= -->
         <!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
 
         <div class="logout">
 
@@ -175,6 +195,10 @@
     <main class="content">
 
         <div class="form-card">
+
+            <!-- ========================= -->
+            <!-- ENCABEZADO -->
+            <!-- ========================= -->
 
             <div class="form-header">
 
@@ -201,6 +225,10 @@
                 {% endif %}
 
             </div>
+
+            <!-- ========================= -->
+            <!-- FORMULARIO -->
+            <!-- ========================= -->
 
             <form
                 id="formUsuario"
@@ -242,7 +270,9 @@
 
                 </div>
 
+                <!-- ========================= -->
                 <!-- CORREO -->
+                <!-- ========================= -->
 
                 <div class="form-group">
 
@@ -258,7 +288,9 @@
 
                 </div>
 
+                <!-- ========================= -->
                 <!-- CONTRASEÑA -->
+                <!-- ========================= -->
 
                 <div class="form-group">
 
@@ -274,7 +306,40 @@
 
                 </div>
 
+                <!-- ========================= -->
+                <!-- RESTABLECER CONTRASEÑA -->
+                <!-- ========================= -->
+
+                {% if usuario %}
+
+                <div class="form-group">
+
+                    <label>Restablecimiento</label>
+
+                    <button
+                        type="button"
+                        id="btnRestablecerContrasena"
+                        class="btn-reset-password">
+
+                        <i class="fa-solid fa-key"></i>
+
+                        Restablecer contraseña
+
+                    </button>
+
+                    <small class="help-reset">
+
+                        Al presionar este botón podrá asignar una nueva contraseña al usuario.
+
+                    </small>
+
+                </div>
+
+                {% endif %}
+
+                <!-- ========================= -->
                 <!-- ROL -->
+                <!-- ========================= -->
 
                 <div class="form-group">
 
@@ -282,7 +347,9 @@
                         Rol <span>*</span>
                     </label>
 
-                    <select id="rol" required>
+                    <select
+                        id="rol"
+                        required>
 
                         <option
                             value=""
@@ -313,7 +380,9 @@
 
                 </div>
 
+                <!-- ========================= -->
                 <!-- BOTONES -->
+                <!-- ========================= -->
 
                 <div class="form-buttons">
 
@@ -343,6 +412,16 @@
     </main>
 
 </div>
+
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
 
 <script src="{{ url_for('static', filename='js/usuario_form.js') }}"></script>
 

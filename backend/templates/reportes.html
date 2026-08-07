@@ -54,40 +54,49 @@
 
         </div>
 
+        <!-- ========================= -->
         <!-- USUARIO LOGUEADO -->
+        <!-- ========================= -->
 
-<div class="user-info">
+        <div class="user-info">
 
-    <i class="fa-solid fa-circle-user"></i>
+            <i class="fa-solid fa-circle-user"></i>
 
-    <div>
+            <div>
 
-        <strong>
-            {{ session["nombre"] }} {{ session["apellido"] }}
-        </strong>
+                <strong>
 
+                    {{ session["nombre"] }} {{ session["apellido"] }}
 
-        {% if session["rol_id"] == 1 %}
+                </strong>
 
-            <span>Administrador</span>
+                {% if session["rol_id"] == 1 %}
 
-        {% else %}
+                    <span>Administrador</span>
 
-            <span>Empleado</span>
+                {% else %}
 
-        {% endif %}
+                    <span>Empleado</span>
 
-    </div>
+                {% endif %}
 
-</div>
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- MENÚ -->
+        <!-- ========================= -->
 
         <nav>
 
             <ul>
 
+                <!-- CLIENTES -->
+
                 <li>
 
-                    <a href="{{ url_for('inicio') }}">
+                    <a href="{{ url_for('clientes') }}">
 
                         <i class="fa-solid fa-users"></i>
 
@@ -96,6 +105,8 @@
                     </a>
 
                 </li>
+
+                <!-- EQUIPOS -->
 
                 <li>
 
@@ -109,6 +120,8 @@
 
                 </li>
 
+                <!-- SERVICIOS -->
+
                 <li>
 
                     <a href="{{ url_for('listar_servicios') }}">
@@ -121,56 +134,61 @@
 
                 </li>
 
-               
-                   {% if session["rol_id"] == 1 %}
+                <!-- USUARIOS -->
 
-<li>
+                {% if session["rol_id"] == 1 %}
 
-    <a href="/usuarios">
+                <li>
 
-        <i class="fa-solid fa-user-gear"></i>
+                    <a href="/usuarios">
 
-        <span>Usuarios</span>
+                        <i class="fa-solid fa-user-gear"></i>
 
-    </a>
+                        <span>Usuarios</span>
 
-</li>
+                    </a>
 
-{% endif %}
+                </li>
 
-                    {% if session["rol_id"] == 1 %}
+                {% endif %}
 
-<li>
+                <!-- REPORTES -->
 
-    <a href="{{ url_for('reportes') }}">
+                {% if session["rol_id"] == 1 %}
 
-        <i class="fa-solid fa-chart-column"></i>
+                <li class="active">
 
-        <span>Reportes</span>
+                    <a href="{{ url_for('reportes') }}">
 
-    </a>
+                        <i class="fa-solid fa-chart-column"></i>
 
-</li>
+                        <span>Reportes</span>
 
-{% endif %}
+                    </a>
+
+                </li>
+
+                {% endif %}
 
             </ul>
 
         </nav>
 
+        <!-- ========================= -->
         <!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
 
-<div class="logout">
+        <div class="logout">
 
-    <a href="/logout">
+            <a href="/logout">
 
-        <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-        <span>Cerrar sesión</span>
+                <span>Cerrar sesión</span>
 
-    </a>
+            </a>
 
-</div>
+        </div>
 
     </aside>
 
@@ -180,28 +198,34 @@
 
     <main class="content">
 
+        <!-- ========================= -->
+        <!-- ENCABEZADO -->
+        <!-- ========================= -->
+
         <div class="page-header">
 
-    <div>
+            <div>
 
-        <h1>Reportes</h1>
+                <h1>Reportes</h1>
 
-        <p>Inicio / <strong>Reportes</strong></p>
+                <p>
+                    Inicio / <strong>Reportes</strong>
+                </p>
 
-    </div>
+            </div>
 
-    <button
-        type="button"
-        id="exportarPdf"
-        class="btn-primary">
+            <button
+                type="button"
+                id="exportarPdf"
+                class="btn-primary">
 
-        <i class="fa-solid fa-file-pdf"></i>
+                <i class="fa-solid fa-file-pdf"></i>
 
-        Exportar PDF
+                Exportar PDF
 
-    </button>
+            </button>
 
-</div>
+        </div>
 
         <!-- ========================= -->
         <!-- FILTROS -->
@@ -209,28 +233,43 @@
 
         <div class="report-filters">
 
+            <!-- PERÍODO -->
 
             <div class="filter-group">
 
-    <label>Período</label>
+                <label>Período</label>
 
-    <select id="reportePeriodo">
+                <select id="reportePeriodo">
 
-        <option value="todos">Todos</option>
+                    <option value="todos">
+                        Todos
+                    </option>
 
-        <option value="hoy">Hoy</option>
+                    <option value="hoy">
+                        Hoy
+                    </option>
 
-        <option value="semana">Esta semana</option>
+                    <option value="semana">
+                        Esta semana
+                    </option>
 
-        <option value="mes">Este mes</option>
+                    <option value="mes">
+                        Este mes
+                    </option>
 
-        <option value="anio">Este año</option>
+                    <option value="anio">
+                        Este año
+                    </option>
 
-        <option value="personalizado">Personalizado</option>
+                    <option value="personalizado">
+                        Personalizado
+                    </option>
 
-    </select>
+                </select>
 
-</div>
+            </div>
+
+            <!-- DESDE -->
 
             <div class="filter-group">
 
@@ -242,6 +281,8 @@
 
             </div>
 
+            <!-- HASTA -->
+
             <div class="filter-group">
 
                 <label>Hasta</label>
@@ -252,17 +293,23 @@
 
             </div>
 
+            <!-- ESTADO -->
+
             <div class="filter-group">
 
                 <label>Estado</label>
 
                 <select id="reporteEstado">
 
-                    <option value="">Todos</option>
+                    <option value="">
+                        Todos
+                    </option>
 
                 </select>
 
             </div>
+
+            <!-- LIMPIAR -->
 
             <button
                 type="button"
@@ -281,6 +328,8 @@
 
         <div class="report-cards">
 
+            <!-- TOTAL SERVICIOS -->
+
             <div class="report-card">
 
                 <div class="report-card-icon">
@@ -293,11 +342,15 @@
 
                     <span>Total de servicios</span>
 
-                    <strong id="totalServicios">0</strong>
+                    <strong id="totalServicios">
+                        0
+                    </strong>
 
                 </div>
 
             </div>
+
+            <!-- INGRESADOS -->
 
             <div class="report-card">
 
@@ -311,11 +364,15 @@
 
                     <span>Servicios ingresados</span>
 
-                    <strong id="serviciosIngresados">0</strong>
+                    <strong id="serviciosIngresados">
+                        0
+                    </strong>
 
                 </div>
 
             </div>
+
+            <!-- EN REPARACIÓN -->
 
             <div class="report-card">
 
@@ -329,11 +386,15 @@
 
                     <span>En reparación</span>
 
-                    <strong id="serviciosReparacion">0</strong>
+                    <strong id="serviciosReparacion">
+                        0
+                    </strong>
 
                 </div>
 
             </div>
+
+            <!-- FINALIZADOS -->
 
             <div class="report-card">
 
@@ -347,11 +408,15 @@
 
                     <span>Finalizados</span>
 
-                    <strong id="serviciosFinalizados">0</strong>
+                    <strong id="serviciosFinalizados">
+                        0
+                    </strong>
 
                 </div>
 
             </div>
+
+            <!-- TOTAL FACTURADO -->
 
             <div class="report-card">
 
@@ -365,7 +430,9 @@
 
                     <span>Total facturado</span>
 
-                    <strong id="totalFacturado">$0</strong>
+                    <strong id="totalFacturado">
+                        $0
+                    </strong>
 
                 </div>
 
@@ -381,7 +448,9 @@
 
             <div class="chart-card">
 
-                <h3>Servicios por estado</h3>
+                <h3>
+                    Servicios por estado
+                </h3>
 
                 <canvas id="graficoEstados"></canvas>
 
@@ -389,7 +458,9 @@
 
             <div class="chart-card">
 
-                <h3>Facturación por mes</h3>
+                <h3>
+                    Facturación por mes
+                </h3>
 
                 <canvas id="graficoFacturacion"></canvas>
 
@@ -398,12 +469,11 @@
         </div>
 
         <!-- ========================= -->
-        <!-- TABLA RESUMEN -->
+        <!-- TABLA -->
         <!-- ========================= -->
 
         <div class="table-container">
 
-           
             <table>
 
                 <thead>
@@ -434,6 +504,10 @@
 
         </div>
 
+        <!-- ========================= -->
+        <!-- PIE DE TABLA -->
+        <!-- ========================= -->
+
         <div class="table-footer">
 
             <span id="cantidadReportes">
@@ -448,11 +522,21 @@
 
 </div>
 
+<!-- ========================= -->
 <!-- CHART.JS -->
+<!-- ========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- JAVASCRIPT REPORTES -->
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
 
 <script src="{{ url_for('static', filename='js/reportes.js') }}"></script>
 

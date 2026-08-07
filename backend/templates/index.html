@@ -4,12 +4,14 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Servicio Técnico - Clientes</title>
 
 
     <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -17,13 +19,15 @@
 
 
     <!-- Font Awesome -->
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
-    <!-- CSS Flask -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- CSS -->
 
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
@@ -34,7 +38,9 @@
 <div class="container">
 
 
+    <!-- ========================= -->
     <!-- SIDEBAR -->
+    <!-- ========================= -->
 
     <aside class="sidebar">
 
@@ -50,42 +56,53 @@
 
         </div>
 
-         <!-- USUARIO LOGUEADO -->
 
-    <div class="user-info">
+        <!-- ========================= -->
+        <!-- USUARIO LOGUEADO -->
+        <!-- ========================= -->
 
-        <i class="fa-solid fa-circle-user"></i>
+        <div class="user-info">
 
-        <div>
+            <i class="fa-solid fa-circle-user"></i>
 
-            <strong>
-                {{ session["nombre"] }} {{ session["apellido"] }}
-            </strong>
+            <div>
+
+                <strong>
+
+                    {{ session["nombre"] }} {{ session["apellido"] }}
+
+                </strong>
 
 
-            {% if session["rol_id"] == 1 %}
+                {% if session["rol_id"] == 1 %}
 
-                <span>Administrador</span>
+                    <span>Administrador</span>
 
-            {% else %}
+                {% else %}
 
-                <span>Empleado</span>
+                    <span>Empleado</span>
 
-            {% endif %}
+                {% endif %}
 
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- ========================= -->
+        <!-- MENÚ -->
+        <!-- ========================= -->
 
         <nav>
 
             <ul>
 
 
+                <!-- CLIENTES -->
+
                 <li class="active">
 
-                 <a href="{{ url_for('clientes') }}">
+                    <a href="{{ url_for('clientes') }}">
 
                         <i class="fa-solid fa-users"></i>
 
@@ -95,6 +112,8 @@
 
                 </li>
 
+
+                <!-- EQUIPOS -->
 
                 <li>
 
@@ -109,7 +128,9 @@
                 </li>
 
 
-               <li>
+                <!-- SERVICIOS -->
+
+                <li>
 
                     <a href="{{ url_for('listar_servicios') }}">
 
@@ -122,66 +143,79 @@
                 </li>
 
 
-               {% if session["rol_id"] == 1 %}
-
-<li>
-
-    <a href="/usuarios">
-
-        <i class="fa-solid fa-user-gear"></i>
-
-        <span>Usuarios</span>
-
-    </a>
-
-</li>
-
-{% endif %}
+                <!-- USUARIOS -->
 
                 {% if session["rol_id"] == 1 %}
 
-<li>
+                <li>
 
-    <a href="{{ url_for('reportes') }}">
+                    <a href="/usuarios">
 
-        <i class="fa-solid fa-chart-column"></i>
+                        <i class="fa-solid fa-user-gear"></i>
 
-        <span>Reportes</span>
+                        <span>Usuarios</span>
 
-    </a>
+                    </a>
 
-</li>
+                </li>
 
-{% endif %}
+                {% endif %}
+
+
+                <!-- REPORTES -->
+
+                {% if session["rol_id"] == 1 %}
+
+                <li>
+
+                    <a href="{{ url_for('reportes') }}">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <span>Reportes</span>
+
+                    </a>
+
+                </li>
+
+                {% endif %}
 
 
             </ul>
 
-
         </nav>
+
+
+        <!-- ========================= -->
+        <!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
 
         <div class="logout">
 
-    <a href="/logout">
+            <a href="/logout">
 
-        <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-        <span>Cerrar sesión</span>
+                <span>Cerrar sesión</span>
 
-    </a>
+            </a>
 
-</div>
+        </div>
+
 
     </aside>
 
 
-
+    <!-- ========================= -->
     <!-- CONTENIDO -->
-
+    <!-- ========================= -->
 
     <main class="content">
 
 
+        <!-- ========================= -->
+        <!-- ENCABEZADO -->
+        <!-- ========================= -->
 
         <div class="page-header">
 
@@ -190,59 +224,88 @@
 
                 <h1>Clientes</h1>
 
-                <p>Inicio / Clientes</p>
+                <p>
+                    Inicio / <strong>Clientes</strong>
+                </p>
 
             </div>
 
 
-<button
-    class="btn-primary"
-    onclick="window.location.href='/clientes/nuevo'">
+            <button
+                type="button"
+                class="btn-primary"
+                onclick="window.location.href='/clientes/nuevo'">
 
-    <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-plus"></i>
 
-    Nuevo Cliente
+                Nuevo Cliente
 
-</button>
+            </button>
+
 
         </div>
 
 
-      <div class="search-container">
+        <!-- ========================= -->
+        <!-- BUSCADOR Y CANTIDAD -->
+        <!-- ========================= -->
 
-    <div class="search-box">
+        <div class="search-container">
 
-        <input
-            type="text"
-            id="buscar"
-            placeholder="Buscar cliente...">
 
-        <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="search-box">
 
-    </div>
+                <input
+                    type="text"
+                    id="buscar"
+                    placeholder="Buscar cliente...">
 
-    <div class="filter-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
 
-        <label for="cantidadMostrar">
-            Mostrar
-        </label>
+            </div>
 
-        <select id="cantidadMostrar">
 
-            <option value="5">5</option>
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="todos">Todos</option>
+            <div class="filter-box">
 
-        </select>
+                <label for="cantidadMostrar">
+                    Mostrar
+                </label>
 
-        <span>clientes</span>
+                <select id="cantidadMostrar">
 
-    </div>
+                    <option value="5">
+                        5
+                    </option>
 
-</div>
+                    <option value="10" selected>
+                        10
+                    </option>
 
+                    <option value="20">
+                        20
+                    </option>
+
+                    <option value="50">
+                        50
+                    </option>
+
+                    <option value="todos">
+                        Todos
+                    </option>
+
+                </select>
+
+                <span>clientes</span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- TABLA DE CLIENTES -->
+        <!-- ========================= -->
 
         <div class="table-container">
 
@@ -254,7 +317,6 @@
 
 
                     <tr>
-
 
                         <th>DNI</th>
 
@@ -270,12 +332,10 @@
 
                         <th>Acciones</th>
 
-
                     </tr>
 
 
                 </thead>
-
 
 
                 <tbody id="tablaClientes">
@@ -284,16 +344,15 @@
                 </tbody>
 
 
-
             </table>
-
 
 
         </div>
 
 
-
-
+        <!-- ========================= -->
+        <!-- PIE DE TABLA -->
+        <!-- ========================= -->
 
         <div class="table-footer">
 
@@ -303,7 +362,6 @@
                 Mostrando 0 clientes
 
             </span>
-
 
 
             <div class="pagination">
@@ -330,72 +388,107 @@
                 </button>
 
 
-
             </div>
 
 
-
         </div>
-
 
 
     </main>
 
 
-
 </div>
 
 
-<!-- ====================================== -->
-<!-- MODAL HISTORIAL DE SERVICIOS -->
-<!-- ====================================== -->
+<!-- ========================= -->
+<!-- MODAL HISTORIAL -->
+<!-- ========================= -->
 
-<div id="modalHistorial" class="modal">
+<div
+    id="modalHistorial"
+    class="modal-historial">
+
 
     <div class="modal-content">
 
+
         <div class="modal-header">
 
-            <h2>Historial de Servicios</h2>
 
-            <button id="cerrarModal" class="btn-cerrar">
+            <h2>
+                Historial de Servicios
+            </h2>
+
+
+            <button
+                id="cerrarModal"
+                class="btn-cerrar">
+
                 <i class="fa-solid fa-xmark"></i>
+
             </button>
 
+
         </div>
+
 
         <div class="modal-body">
 
+
             <table class="tabla-historial">
+
 
                 <thead>
 
+
                     <tr>
+
                         <th>Fecha</th>
+
                         <th>Equipo</th>
+
                         <th>Estado</th>
+
                         <th>Problema</th>
+
                         <th>Total</th>
+
                     </tr>
+
 
                 </thead>
 
+
                 <tbody id="tablaHistorial">
+
 
                 </tbody>
 
+
             </table>
+
 
         </div>
 
+
     </div>
+
 
 </div>
 
-<!-- JS Flask -->
+
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
 
 <script src="{{ url_for('static', filename='js/clientes.js') }}"></script>
-
 
 
 </body>

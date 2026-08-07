@@ -23,7 +23,7 @@ async function cargarClientes() {
 
     try {
 
-   const respuesta = await fetch("/api/clientes");
+        const respuesta = await fetch("/api/clientes");
 
         clientes = await respuesta.json();
 
@@ -32,6 +32,13 @@ async function cargarClientes() {
     } catch (error) {
 
         console.error("Error cargando clientes:", error);
+
+        Swal.fire({
+            icon: "error",
+            title: "Servicio Técnico",
+            text: "No fue posible cargar los clientes.",
+            confirmButtonText: "Aceptar"
+        });
 
     }
 
@@ -114,12 +121,12 @@ function mostrarClientes(lista) {
                         </button>
 
                         <button
-    class="btn-history"
-    onclick="verHistorial(${cliente.clienteid})">
+                            class="btn-history"
+                            onclick="verHistorial(${cliente.clienteid})">
 
-    <i class="fa-solid fa-clock-rotate-left"></i>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
 
-</button>
+                        </button>
 
                     </div>
 
@@ -156,6 +163,7 @@ selectorCantidad.addEventListener("change", aplicarFiltros);
 
 cargarClientes();
 
+
 // ======================================
 // MODAL HISTORIAL DE SERVICIOS
 // ======================================
@@ -164,11 +172,13 @@ const modal = document.getElementById("modalHistorial");
 const tablaHistorial = document.getElementById("tablaHistorial");
 const cerrarModal = document.getElementById("cerrarModal");
 
+
 cerrarModal.addEventListener("click", () => {
 
     modal.style.display = "none";
 
 });
+
 
 window.addEventListener("click", (e) => {
 
@@ -180,19 +190,24 @@ window.addEventListener("click", (e) => {
 
 });
 
-async function verHistorial(clienteId) {
 
-    alert("Entró");
+async function verHistorial(clienteId) {
 
     console.log(modal);
 
     if (modal == null) {
-        alert("Modal es NULL");
+
+        Swal.fire({
+            icon: "error",
+            title: "Servicio Técnico",
+            text: "No fue posible abrir el historial de servicios.",
+            confirmButtonText: "Aceptar"
+        });
+
         return;
+
     }
 
     modal.style.display = "flex";
-
-    alert("Display cambiado");
 
 }

@@ -107,14 +107,24 @@ formulario.addEventListener("submit", async function(e){
 
         if(respuesta.ok){
 
-            alert(resultado.mensaje);
+            await Swal.fire({
+                icon: "success",
+                title: "Servicio Técnico",
+                text: resultado.mensaje,
+                confirmButtonText: "Aceptar"
+            });
 
             window.location.href = "/usuarios";
 
         }
         else{
 
-            alert(resultado.mensaje);
+            Swal.fire({
+                icon: "error",
+                title: "Servicio Técnico",
+                text: resultado.mensaje,
+                confirmButtonText: "Aceptar"
+            });
 
         }
 
@@ -123,84 +133,56 @@ formulario.addEventListener("submit", async function(e){
 
         console.error(error);
 
-        alert("No fue posible conectar con el servidor.");
-
-    }
-
-});
-// ======================================
-// GUARDAR USUARIO
-// ======================================
-
-formulario.addEventListener("submit", async function(e){
-
-    e.preventDefault();
-
-    const usuario = {
-
-        apellido: document
-            .getElementById("apellido")
-            .value
-            .trim(),
-
-        nombre: document
-            .getElementById("nombre")
-            .value
-            .trim(),
-
-        correo: document
-            .getElementById("correo")
-            .value
-            .trim(),
-
-        contrasena: document
-            .getElementById("contrasena")
-            .value,
-
-        rolId: document
-            .getElementById("rol")
-            .value
-
-    };
-
-    try{
-
-        const respuesta = await fetch("/usuarios/guardar", {
-
-            method: "POST",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify(usuario)
-
+        Swal.fire({
+            icon: "error",
+            title: "Servicio Técnico",
+            text: "No fue posible conectar con el servidor.",
+            confirmButtonText: "Aceptar"
         });
 
-        const resultado = await respuesta.json();
-
-        if(respuesta.ok){
-
-            alert(resultado.mensaje);
-
-            window.location.href = "/usuarios";
-
-        }
-        else{
-
-            alert(resultado.mensaje);
-
-        }
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert("No fue posible conectar con el servidor.");
-
     }
 
 });
+
+
+// ======================================
+// RESTABLECER CONTRASEÑA
+// ======================================
+
+const botonRestablecer =
+    document.getElementById("btnRestablecerContrasena");
+
+if (botonRestablecer) {
+
+    botonRestablecer.addEventListener("click", async function () {
+
+        const resultado = await Swal.fire({
+            icon: "warning",
+            title: "Servicio Técnico",
+            text: "¿Está seguro de que desea restablecer la contraseña de este usuario?",
+            showCancelButton: true,
+            confirmButtonText: "Sí, restablecer",
+            cancelButtonText: "Cancelar"
+        });
+
+        if (!resultado.isConfirmed) {
+            return;
+        }
+
+        const campoContrasena =
+            document.getElementById("contrasena");
+
+        campoContrasena.value = "";
+
+        campoContrasena.focus();
+
+        Swal.fire({
+            icon: "info",
+            title: "Servicio Técnico",
+            text: "Ingrese la nueva contraseña y luego presione Guardar.",
+            confirmButtonText: "Aceptar"
+        });
+
+    });
+
+}

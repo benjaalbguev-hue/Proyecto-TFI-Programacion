@@ -202,3 +202,31 @@ body{
     color:#94a3b8;
 
 }
+
+/* =====================================
+   RECUPERAR CONTRASEÑA
+===================================== */
+
+.forgot-password{
+
+    display:block;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#2563EB;
+
+    font-size:14px;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+}
+
+.forgot-password:hover{
+
+    text-decoration:underline;
+
+}

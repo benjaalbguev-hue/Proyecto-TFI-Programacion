@@ -47,22 +47,86 @@ formulario.addEventListener("submit", async function(e){
 
         if(respuesta.ok && resultado.ok){
 
+            await Swal.fire({
+
+                icon: "success",
+
+                title: "Servicio Técnico",
+
+                text: "Inicio de sesión correcto.",
+
+                confirmButtonText: "Ingresar"
+
+            });
+
             window.location.href = "/clientes";
 
         }
         else{
 
-            alert(resultado.mensaje || "No se pudo iniciar sesión.");
+            Swal.fire({
+
+                icon: "error",
+
+                title: "Servicio Técnico",
+
+                text:
+                    resultado.mensaje ||
+                    "No se pudo iniciar sesión.",
+
+                confirmButtonText: "Aceptar"
+
+            });
 
         }
 
     }
     catch(error){
 
-        console.error("Error al iniciar sesión:", error);
+        console.error(
+            "Error al iniciar sesión:",
+            error
+        );
 
-        alert("Ocurrió un error al conectar con el servidor.");
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Servicio Técnico",
+
+            text:
+                "Ocurrió un error al conectar con el servidor.",
+
+            confirmButtonText: "Aceptar"
+
+        });
 
     }
 
 });
+
+
+// ======================================
+// RECUPERACIÓN DE CONTRASEÑA
+// ======================================
+
+document
+    .getElementById("olvideContrasena")
+    .addEventListener("click", function(e){
+
+        e.preventDefault();
+
+        Swal.fire({
+
+            icon: "info",
+
+            title: "Servicio Técnico",
+
+            text:
+                "Solicite al administrador del sistema el restablecimiento de su contraseña.",
+
+            confirmButtonText: "Aceptar"
+
+        });
+
+    });

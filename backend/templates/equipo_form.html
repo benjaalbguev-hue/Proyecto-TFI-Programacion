@@ -73,7 +73,7 @@
             <ul>
 
                 <li>
-                    <a href="/">
+                    <a href="{{ url_for('clientes') }}">
                         <i class="fa-solid fa-users"></i>
                         <span>Clientes</span>
                     </a>
@@ -258,7 +258,7 @@
                     <button
                         type="button"
                         class="btn-cancel"
-                        onclick="window.location.href='/'">
+                        onclick="window.location.href='/clientes'">
 
                         Cancelar
 
@@ -281,6 +281,8 @@
     </main>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="{{ url_for('static', filename='js/equipo_form.js') }}"></script>
 

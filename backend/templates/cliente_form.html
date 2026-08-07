@@ -4,280 +4,374 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Servicio Técnico - Cliente</title>
 
     <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome -->
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cliente_form.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/cliente_form.css') }}">
 
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-computer"></i>
+
+            <h2>
+                Servicio<br>
+                Técnico
+            </h2>
+
+        </div>
 
         <!-- ========================= -->
-        <!-- SIDEBAR -->
+        <!-- USUARIO LOGUEADO -->
         <!-- ========================= -->
 
-        <aside class="sidebar">
+        <div class="user-info">
 
-            <div class="logo">
+            <i class="fa-solid fa-circle-user"></i>
 
-                <i class="fa-solid fa-computer"></i>
+            <div>
 
-                <h2>Servicio<br>Técnico</h2>
+                <strong>
+
+                    {{ session["nombre"] }} {{ session["apellido"] }}
+
+                </strong>
+
+                {% if session["rol_id"] == 1 %}
+
+                    <span>Administrador</span>
+
+                {% else %}
+
+                    <span>Empleado</span>
+
+                {% endif %}
 
             </div>
 
-            <!-- USUARIO LOGUEADO -->
-
-<div class="user-info">
-
-    <i class="fa-solid fa-circle-user"></i>
-
-    <div>
-
-        <strong>
-            {{ session["nombre"] }} {{ session["apellido"] }}
-        </strong>
-
-
-        {% if session["rol_id"] == 1 %}
-
-            <span>Administrador</span>
-
-        {% else %}
-
-            <span>Empleado</span>
-
-        {% endif %}
-
-    </div>
-
-</div>
-
-            <nav>
-
-                <ul>
-
-                    <li class="active">
-                            <a href="{{ url_for('clientes') }}">
-                            <i class="fa-solid fa-users"></i>
-                            <span>Clientes</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-laptop"></i>
-                            <span>Equipos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ url_for('listar_servicios') }}">
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
-                            <span>Servicios</span>
-                        </a>
-                    </li>
-
-                   {% if session["rol_id"] == 1 %}
-
-<li>
-
-    <a href="/usuarios">
-
-        <i class="fa-solid fa-user-gear"></i>
-
-        <span>Usuarios</span>
-
-    </a>
-
-</li>
-
-{% endif %}
-
-                    {% if session["rol_id"] == 1 %}
-
-<li>
-
-    <a href="{{ url_for('reportes') }}">
-
-        <i class="fa-solid fa-chart-column"></i>
-
-        <span>Reportes</span>
-
-    </a>
-
-</li>
-
-{% endif %}
-
-                </ul>
-
-            </nav>
-
-<!-- CERRAR SESIÓN -->
-
-<div class="logout">
-
-    <a href="/logout">
-
-        <i class="fa-solid fa-right-from-bracket"></i>
-
-        <span>Cerrar sesión</span>
-
-    </a>
-
-</div>
-
-        </aside>
+        </div>
 
         <!-- ========================= -->
-        <!-- CONTENIDO -->
+        <!-- MENÚ -->
         <!-- ========================= -->
 
-        <main class="content">
+        <nav>
 
-            <div class="form-card">
+            <ul>
 
-                <div class="form-header">
+                <!-- CLIENTES -->
 
-                    {% if cliente %}
+                <li class="active">
 
-    <h1>Editar Cliente</h1>
+                    <a href="{{ url_for('clientes') }}">
 
-    <p>Inicio / <strong>Clientes</strong> / Editar</p>
+                        <i class="fa-solid fa-users"></i>
 
-{% else %}
+                        <span>Clientes</span>
 
-    <h1>Nuevo Cliente</h1>
+                    </a>
 
-    <p>Inicio / <strong>Clientes</strong> / Nuevo</p>
+                </li>
 
-{% endif %}
+                <!-- EQUIPOS -->
+
+                <li>
+
+                    <a href="#">
+
+                        <i class="fa-solid fa-laptop"></i>
+
+                        <span>Equipos</span>
+
+                    </a>
+
+                </li>
+
+                <!-- SERVICIOS -->
+
+                <li>
+
+                    <a href="{{ url_for('listar_servicios') }}">
+
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                        <span>Servicios</span>
+
+                    </a>
+
+                </li>
+
+                <!-- USUARIOS -->
+
+                {% if session["rol_id"] == 1 %}
+
+                <li>
+
+                    <a href="/usuarios">
+
+                        <i class="fa-solid fa-user-gear"></i>
+
+                        <span>Usuarios</span>
+
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+                <!-- REPORTES -->
+
+                {% if session["rol_id"] == 1 %}
+
+                <li>
+
+                    <a href="{{ url_for('reportes') }}">
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        <span>Reportes</span>
+
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+        <!-- ========================= -->
+        <!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
+
+        <div class="logout">
+
+            <a href="/logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Cerrar sesión</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+        <div class="form-card">
+
+            <!-- ========================= -->
+            <!-- ENCABEZADO -->
+            <!-- ========================= -->
+
+            <div class="form-header">
+
+                {% if cliente %}
+
+                    <h1>Editar Cliente</h1>
+
+                    <p>
+                        Inicio /
+                        <strong>Clientes</strong> /
+                        Editar
+                    </p>
+
+                {% else %}
+
+                    <h1>Nuevo Cliente</h1>
+
+                    <p>
+                        Inicio /
+                        <strong>Clientes</strong> /
+                        Nuevo
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- FORMULARIO -->
+            <!-- ========================= -->
+
+            <form
+                id="formCliente"
+                data-id="{{ cliente.clienteid if cliente else '' }}">
+
+                <div class="form-grid">
+
+                    <!-- DNI -->
+
+                    <div class="form-group">
+
+                        <label>
+                            DNI <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="dni"
+                            maxlength="8"
+                            value="{{ cliente.dni if cliente else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- APELLIDO -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Apellido <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="apellido"
+                            value="{{ cliente.apellido if cliente else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- NOMBRE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Nombre <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nombre"
+                            value="{{ cliente.nombre if cliente else '' }}"
+                            required>
+
+                    </div>
+
+                    <!-- TELÉFONO -->
+
+                    <div class="form-group">
+
+                        <label>Teléfono</label>
+
+                        <input
+                            type="text"
+                            id="telefono"
+                            value="{{ cliente.telefono if cliente else '' }}">
+
+                    </div>
 
                 </div>
 
-                <form id="formCliente"
-      data-id="{{ cliente.clienteid if cliente else '' }}">
+                <!-- DIRECCIÓN -->
 
-                    <div class="form-grid">
+                <div class="form-group">
 
-                        <div class="form-group">
+                    <label>Dirección</label>
 
-                            <label>DNI <span>*</span></label>
+                    <input
+                        type="text"
+                        id="direccion"
+                        value="{{ cliente.direccion if cliente else '' }}">
 
-                            <input
-    type="text"
-    id="dni"
-    maxlength="8"
-    value="{{ cliente.dni if cliente else '' }}"
-    required>
+                </div>
 
-                        </div>
+                <!-- EMAIL -->
 
-                        <div class="form-group">
+                <div class="form-group">
 
-                            <label>Apellido <span>*</span></label>
+                    <label>Email</label>
 
-                            <input
-    type="text"
-    id="apellido"
-    value="{{ cliente.apellido if cliente else '' }}"
-    required>
+                    <input
+                        type="email"
+                        id="email"
+                        value="{{ cliente.email if cliente else '' }}">
 
-                        </div>
+                </div>
 
-                        <div class="form-group">
+                <!-- ========================= -->
+                <!-- BOTONES -->
+                <!-- ========================= -->
 
-                            <label>Nombre <span>*</span></label>
+                <div class="form-buttons">
 
-                            <input
-    type="text"
-    id="nombre"
-    value="{{ cliente.nombre if cliente else '' }}"
-    required>
+                    <button
+                        type="button"
+                        class="btn-cancel"
+                        onclick="window.location.href='/clientes'">
 
-                        </div>
+                        Cancelar
 
-                        <div class="form-group">
+                    </button>
 
-                            <label>Teléfono</label>
+                    <button
+                        type="submit"
+                        class="btn-save">
 
-                            <input
-    type="text"
-    id="telefono"
-    value="{{ cliente.telefono if cliente else '' }}">
+                        Guardar
 
-                        </div>
+                    </button>
 
-                    </div>
+                </div>
 
-                    <div class="form-group">
+            </form>
 
-                        <label>Dirección</label>
+        </div>
 
-                        <input
-    type="text"
-    id="direccion"
-    value="{{ cliente.direccion if cliente else '' }}">
+    </main>
 
-                    </div>
+</div>
 
-                    <div class="form-group">
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
 
-                        <label>Email</label>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                        <input
-    type="email"
-    id="email"
-    value="{{ cliente.email if cliente else '' }}">
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
 
-                    </div>
-
-                    <div class="form-buttons">
-
-                        <button
-                             type="button"
-                             class="btn-cancel"
-                             onclick="window.location.href='/clientes'">
-
-                            Cancelar
-
-                        </button>
-
-                        <button
-                            type="submit"
-                            class="btn-save">
-
-                            Guardar
-
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </div>
-
-        </main>
-
-    </div>
-
-    <script src="{{ url_for('static', filename='js/cliente_form.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cliente_form.js') }}"></script>
 
 </body>
 

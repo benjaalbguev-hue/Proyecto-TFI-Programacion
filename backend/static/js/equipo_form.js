@@ -56,15 +56,25 @@ formulario.addEventListener("submit", async function (e) {
 
         if (respuesta.ok) {
 
-            alert(resultado.mensaje);
+            await Swal.fire({
+                icon: "success",
+                title: "Servicio Técnico",
+                text: resultado.mensaje,
+                confirmButtonText: "Aceptar"
+            });
 
             window.location.href = "/equipos";
 
         }
 
-        else{
+        else {
 
-            alert(resultado.mensaje);
+            Swal.fire({
+                icon: "error",
+                title: "Servicio Técnico",
+                text: resultado.mensaje,
+                confirmButtonText: "Aceptar"
+            });
 
         }
 
@@ -74,7 +84,12 @@ formulario.addEventListener("submit", async function (e) {
 
         console.error(error);
 
-        alert("No fue posible conectar con el servidor.");
+        Swal.fire({
+            icon: "error",
+            title: "Servicio Técnico",
+            text: "No fue posible conectar con el servidor.",
+            confirmButtonText: "Aceptar"
+        });
 
     }
 

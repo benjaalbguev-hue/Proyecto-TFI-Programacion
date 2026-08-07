@@ -54,42 +54,48 @@
 
         </div>
 
+        <!-- ========================= -->
         <!-- USUARIO LOGUEADO -->
+        <!-- ========================= -->
 
-<div class="user-info">
+        <div class="user-info">
 
-    <i class="fa-solid fa-circle-user"></i>
+            <i class="fa-solid fa-circle-user"></i>
 
-    <div>
+            <div>
 
-        <strong>
-            {{ session["nombre"] }} {{ session["apellido"] }}
-        </strong>
+                <strong>
+                    {{ session["nombre"] }} {{ session["apellido"] }}
+                </strong>
 
+                {% if session["rol_id"] == 1 %}
 
-        {% if session["rol_id"] == 1 %}
+                    <span>Administrador</span>
 
-            <span>Administrador</span>
+                {% else %}
 
-        {% else %}
+                    <span>Empleado</span>
 
-            <span>Empleado</span>
+                {% endif %}
 
-        {% endif %}
+            </div>
 
-    </div>
+        </div>
 
-</div>
-
+        <!-- ========================= -->
+        <!-- MENÚ -->
+        <!-- ========================= -->
 
         <nav>
 
             <ul>
 
+                <!-- CLIENTES -->
+
                 <li>
 
-                        <a href="{{ url_for('clientes') }}">
-                            
+                    <a href="{{ url_for('clientes') }}">
+
                         <i class="fa-solid fa-users"></i>
 
                         <span>Clientes</span>
@@ -97,6 +103,8 @@
                     </a>
 
                 </li>
+
+                <!-- EQUIPOS -->
 
                 <li>
 
@@ -110,6 +118,8 @@
 
                 </li>
 
+                <!-- SERVICIOS -->
+
                 <li>
 
                     <a href="{{ url_for('listar_servicios') }}">
@@ -122,6 +132,8 @@
 
                 </li>
 
+                <!-- USUARIOS -->
+
                 <li class="active">
 
                     <a href="{{ url_for('usuarios') }}">
@@ -133,6 +145,8 @@
                     </a>
 
                 </li>
+
+                <!-- REPORTES -->
 
                 <li>
 
@@ -150,7 +164,9 @@
 
         </nav>
 
+        <!-- ========================= -->
         <!-- CERRAR SESIÓN -->
+        <!-- ========================= -->
 
         <div class="logout">
 
@@ -172,13 +188,19 @@
 
     <main class="content">
 
+        <!-- ========================= -->
+        <!-- ENCABEZADO -->
+        <!-- ========================= -->
+
         <div class="page-header">
 
             <div>
 
                 <h1>Usuarios</h1>
 
-                <p>Inicio / <strong>Usuarios</strong></p>
+                <p>
+                    Inicio / <strong>Usuarios</strong>
+                </p>
 
             </div>
 
@@ -195,48 +217,59 @@
 
         </div>
 
- <!-- ========================= -->
-<!-- BUSCADOR Y FILTRO -->
-<!-- ========================= -->
+        <!-- ========================= -->
+        <!-- BUSCADOR Y CANTIDAD -->
+        <!-- ========================= -->
 
-<div class="top-bar">
+        <div class="search-container">
 
-    <div class="search-container">
+            <div class="search-box">
 
-        <div class="search-box">
+                <input
+                    type="text"
+                    id="buscarUsuario"
+                    placeholder="Buscar usuario...">
 
-            <input
-                type="text"
-                id="buscarUsuario"
-                placeholder="Buscar usuario...">
+                <i class="fa-solid fa-magnifying-glass"></i>
 
-            <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <div class="filter-box">
+
+                <label for="cantidadMostrar">
+                    Mostrar
+                </label>
+
+                <select id="cantidadMostrar">
+
+                    <option value="5">
+                        5
+                    </option>
+
+                    <option value="10" selected>
+                        10
+                    </option>
+
+                    <option value="20">
+                        20
+                    </option>
+
+                    <option value="50">
+                        50
+                    </option>
+
+                    <option value="todos">
+                        Todos
+                    </option>
+
+                </select>
+
+                <span>usuarios</span>
+
+            </div>
 
         </div>
 
-    </div>
-
-    <div class="filter-box">
-
-        <label for="cantidadMostrar">
-            Mostrar
-        </label>
-
-        <select id="cantidadMostrar">
-
-            <option value="5">5</option>
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="todos">Todos</option>
-
-        </select>
-
-        <span>usuarios</span>
-
-    </div>
-
-</div>
         <!-- ========================= -->
         <!-- TABLA -->
         <!-- ========================= -->
@@ -273,6 +306,10 @@
 
         </div>
 
+        <!-- ========================= -->
+        <!-- PIE DE TABLA -->
+        <!-- ========================= -->
+
         <div class="table-footer">
 
             <span id="cantidadUsuarios">
@@ -286,6 +323,16 @@
     </main>
 
 </div>
+
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
 
 <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
 

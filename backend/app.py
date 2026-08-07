@@ -48,9 +48,7 @@ def rol_required(rol):
 @app.route("/")
 def inicio():
 
-    if "usuario_id" in session:
-
-        return redirect(url_for("clientes"))
+    session.clear()
 
     return redirect(url_for("login"))
 

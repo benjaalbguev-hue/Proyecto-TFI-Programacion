@@ -10,16 +10,19 @@
     <title>Iniciar Sesión</title>
 
     <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome -->
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS -->
+
     <link rel="stylesheet"
         href="{{ url_for('static', filename='css/login.css') }}">
 
@@ -27,67 +30,86 @@
 
 <body>
 
-    <div class="login-container">
+<div class="login-container">
 
-        <div class="login-card">
+    <div class="login-card">
 
-            <div class="logo">
+        <div class="logo">
 
-                <i class="fa-solid fa-computer"></i>
+            <i class="fa-solid fa-computer"></i>
 
-                <h1>Servicio Técnico</h1>
+            <h1>Servicio Técnico</h1>
 
-                <p>Iniciar Sesión</p>
-
-            </div>
-
-            <form id="formLogin">
-
-                <div class="form-group">
-
-                    <label>Correo</label>
-
-                    <input
-                        type="email"
-                        id="correo"
-                        placeholder="Ingrese su correo"
-                        required>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Contraseña</label>
-
-                    <input
-                        type="password"
-                        id="contrasena"
-                        placeholder="Ingrese su contraseña"
-                        required>
-
-                </div>
-
-                <button
-                    type="submit"
-                    class="btn-login">
-
-                    Ingresar
-
-                </button>
-
-            </form>
-
-            <p class="copyright">
-
-                © 2026 Servicio Técnico
-
-            </p>
+            <p>Iniciar Sesión</p>
 
         </div>
 
+        <form id="formLogin">
+
+            <div class="form-group">
+
+                <label>Correo</label>
+
+                <input
+                    type="email"
+                    id="correo"
+                    placeholder="Ingrese su correo"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Contraseña</label>
+
+                <input
+                    type="password"
+                    id="contrasena"
+                    placeholder="Ingrese su contraseña"
+                    required>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn-login">
+
+                Ingresar
+
+            </button>
+
+            <a
+                href="#"
+                id="olvideContrasena"
+                class="forgot-password">
+
+                ¿Olvidaste tu contraseña?
+
+            </a>
+
+        </form>
+
+        <p class="copyright">
+
+            © 2026 Servicio Técnico
+
+        </p>
+
     </div>
 
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</div>
+
+<!-- ========================= -->
+<!-- SWEETALERT2 -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ========================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================= -->
+
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
 
 </body>
 
